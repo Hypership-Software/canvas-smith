@@ -1,0 +1,95 @@
+.head {
+  max-width: 46rem;
+  margin-block-end: clamp(2rem, 5vw, 3rem);
+}
+
+.title {
+  margin-block-end: 1rem;
+}
+
+.sub {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--cm-muted);
+}
+
+.prompt {
+  color: var(--cm-ink);
+  font-weight: 500;
+}
+
+/* --- Slider stage ---------------------------------------------------------- */
+.stage {
+  margin-block-end: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+/* --- Receipts row ---------------------------------------------------------- */
+.receipts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.receipt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: 1rem 1.125rem;
+  background-color: var(--cm-paper);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius-card); /* 12px */
+}
+
+.receiptLabel {
+  font-family: var(--cm-font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cm-spark);
+}
+
+.receiptDiff {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--cm-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.before,
+.after {
+  display: inline-block;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 6px;
+  word-break: break-word;
+}
+
+.before {
+  color: #9a1f3a;
+  background-color: rgba(220, 38, 38, 0.08);
+  text-decoration: line-through;
+  text-decoration-color: rgba(154, 31, 58, 0.55);
+}
+
+.after {
+  color: var(--cm-blue-deep);
+  background-color: rgba(8, 117, 225, 0.08);
+}
+
+.arrow {
+  flex: 0 0 auto;
+  color: var(--cm-muted);
+  font-weight: 500;
+}
+
+@media (max-width: 820px) {
+  .receipts {
+    grid-template-columns: 1fr;
+  }
+}

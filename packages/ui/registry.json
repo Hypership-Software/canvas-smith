@@ -1,0 +1,323 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "canvasmith",
+  "homepage": "https://canvasmith.dev",
+  "items": [
+    {
+      "name": "stat-card",
+      "type": "registry:ui",
+      "title": "Stat Card",
+      "description": "A KPI metric tile built on Canvas Kit Card with type tokens and a trend StatusIndicator / delta indicator.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-preview-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/stat-card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["data-display", "dashboard"]
+    },
+    {
+      "name": "empty-state",
+      "type": "registry:ui",
+      "title": "Empty State",
+      "description": "A zero-data placeholder: Canvas SystemIcon, Heading, BodyText, and a primary call-to-action button.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/empty-state.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["feedback", "data-display"]
+    },
+    {
+      "name": "page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "A page heading region: Breadcrumbs, a Canvas Heading, and a primary/secondary action button cluster.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/page-header.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["layout", "navigation"]
+    },
+    {
+      "name": "filter-bar",
+      "type": "registry:ui",
+      "title": "Filter Bar",
+      "description": "A toolbar row of filters: Select / Combobox, Pill or SegmentedControl, and a search TextInput.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-preview-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/filter-bar.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["forms", "data-display"]
+    },
+    {
+      "name": "user-menu",
+      "type": "registry:ui",
+      "title": "User Menu",
+      "description": "An account/profile menu: Canvas Avatar trigger opening a Menu of account actions.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/user-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["navigation", "overlay"]
+    },
+    {
+      "name": "confirm-dialog",
+      "type": "registry:ui",
+      "title": "Confirm Dialog",
+      "description": "A promise-based confirmation Modal/Dialog with Primary/Delete buttons, plus a useConfirmDialog hook.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/confirm-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/canvasmith/hooks/use-confirm-dialog.tsx",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": ["overlay", "feedback"]
+    },
+    {
+      "name": "toast-center",
+      "type": "registry:ui",
+      "title": "Toast Center",
+      "description": "A notification queue built on Canvas Toast + Banner, exposed through a useToast hook.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/toast-center.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/canvasmith/hooks/use-toast.tsx",
+          "type": "registry:hook"
+        }
+      ],
+      "categories": ["feedback", "overlay"]
+    },
+    {
+      "name": "page-tabs",
+      "type": "registry:ui",
+      "title": "Page Tabs",
+      "description": "Canvas Tabs bound to a content-switch layout for in-page navigation between panels.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/ui/page-tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["navigation", "layout"]
+    },
+    {
+      "name": "app-shell",
+      "type": "registry:component",
+      "title": "App Shell",
+      "description": "An application layout scaffold: top header, a collapsible Canvas SidePanel for navigation, and a main content region.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/blocks/app-shell.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["layout"]
+    },
+    {
+      "name": "data-table",
+      "type": "registry:component",
+      "title": "Data Table",
+      "description": "A generic data table: Canvas Table with sortable headers, Checkbox row selection, search, and Pagination via columns/data props.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/blocks/data-table.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["data-display"]
+    },
+    {
+      "name": "settings-form",
+      "type": "registry:component",
+      "title": "Settings Form",
+      "description": "Grouped FormField sections with TextInput / Select / Switch controls and a sticky save bar.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-preview-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/blocks/settings-form.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["forms"]
+    },
+    {
+      "name": "detail-drawer",
+      "type": "registry:component",
+      "title": "Detail Drawer",
+      "description": "A Canvas SidePanel (expand/collapse) wrapping a detail record with action buttons.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/blocks/detail-drawer.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "categories": ["overlay", "layout"]
+    },
+    {
+      "name": "dashboard",
+      "type": "registry:block",
+      "title": "Dashboard",
+      "description": "A full dashboard page composing the app shell, page header, a stat-card grid, and a data table.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "registryDependencies": [
+        "@canvasmith/app-shell",
+        "@canvasmith/page-header",
+        "@canvasmith/stat-card",
+        "@canvasmith/data-table"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/blocks/dashboard/page.tsx",
+          "type": "registry:page",
+          "target": "app/dashboard/page.tsx"
+        }
+      ],
+      "categories": ["dashboard"]
+    },
+    {
+      "name": "list-detail",
+      "type": "registry:block",
+      "title": "List–Detail",
+      "description": "A master-detail page composing the app shell, a data-table list, and a detail drawer.",
+      "author": "Canvasmith <https://canvasmith.dev>",
+      "dependencies": [
+        "@workday/canvas-kit-react@^15.0.6",
+        "@workday/canvas-kit-styling@^15.0.6",
+        "@workday/canvas-tokens-web@^4.3.0",
+        "@workday/canvas-system-icons-web@^4.0.4",
+        "@emotion/react@^11"
+      ],
+      "registryDependencies": [
+        "@canvasmith/app-shell",
+        "@canvasmith/data-table",
+        "@canvasmith/detail-drawer"
+      ],
+      "files": [
+        {
+          "path": "registry/canvasmith/blocks/list-detail/page.tsx",
+          "type": "registry:page",
+          "target": "app/list-detail/page.tsx"
+        }
+      ],
+      "categories": ["dashboard", "layout"]
+    }
+  ]
+}

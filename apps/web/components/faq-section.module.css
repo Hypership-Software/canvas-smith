@@ -1,0 +1,102 @@
+.heading {
+  max-width: 16ch;
+  margin-block: 0.75rem 2.5rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  max-width: 760px;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--cm-line);
+}
+
+.item {
+  border-bottom: 1px solid var(--cm-line);
+}
+
+/* The <h3> wrapping each toggle carries no visual styling — the button does. */
+.questionWrap {
+  margin: 0;
+  font: inherit;
+  font-family: var(--cm-font-body);
+  letter-spacing: normal;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: 100%;
+  padding-block: 1.375rem;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--cm-ink);
+}
+
+.questionText {
+  font-family: var(--cm-font-body);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--cm-ink);
+  transition: color 0.2s var(--cm-ease);
+}
+
+.question:hover .questionText {
+  color: var(--cm-blue-deep);
+}
+
+/* Plus → minus: the warm "spark" accent ring; the vertical stroke collapses when open. */
+.indicator {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--cm-radius-pill);
+  border: 1px solid var(--cm-line);
+  color: var(--cm-spark);
+  background-color: var(--cm-surface);
+  transition:
+    border-color 0.2s var(--cm-ease),
+    background-color 0.2s var(--cm-ease);
+}
+
+.question:hover .indicator {
+  border-color: var(--cm-spark);
+}
+
+.indicatorVertical {
+  transform-origin: center;
+  transition: opacity 0.24s var(--cm-ease);
+}
+
+.indicatorOpen .indicatorVertical {
+  opacity: 0;
+}
+
+/* framer animates this wrapper's height; overflow hidden keeps the wipe clean. */
+.panel {
+  overflow: hidden;
+}
+
+.answer {
+  max-width: 64ch;
+  padding-bottom: 1.5rem;
+  margin: 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--cm-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicatorVertical {
+    transition: none;
+  }
+}

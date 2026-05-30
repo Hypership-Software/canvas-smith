@@ -1,0 +1,96 @@
+.head {
+  max-width: 42rem;
+  margin-block-end: clamp(2rem, 5vw, 3rem);
+}
+
+.title {
+  margin-block-end: 1rem;
+}
+
+.sub {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* --- Numbered steps -------------------------------------------------------- */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 46rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  counter-reset: install;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.num {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  border-radius: var(--cm-radius-pill); /* 999px */
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--cm-night-line);
+  color: var(--cm-blue-bright);
+  font-family: var(--cm-font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  /* Nudge to align with the step title's cap height. */
+  margin-block-start: 0.0625rem;
+}
+
+.stepBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  min-width: 0;
+}
+
+.stepTitle {
+  font-family: var(--cm-font-body);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* --- Footer (helper + docs button) ----------------------------------------- */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.5rem;
+  margin-block-start: clamp(2rem, 5vw, 2.75rem);
+}
+
+.helper {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.code {
+  font-family: var(--cm-font-mono);
+  font-size: 0.875rem;
+  color: var(--cm-blue-bright);
+}
+
+/* Recolor the shared ghost Button so it reads on the dark night band. */
+.docsButton {
+  color: #ffffff;
+  border-color: var(--cm-night-line);
+}
+
+.docsButton:hover {
+  border-color: var(--cm-blue-bright);
+  color: var(--cm-blue-bright);
+}

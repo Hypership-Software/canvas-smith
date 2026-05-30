@@ -1,0 +1,117 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.heading {
+  max-width: 22ch;
+}
+
+/* --- Steps ----------------------------------------------------------------- */
+.steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--cm-radius-pill);
+  background-color: var(--cm-surface);
+  border: 1px solid var(--cm-line);
+  font-family: var(--cm-font-display);
+  font-size: 1.375rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--cm-blue-deep);
+  box-shadow: 0 1px 2px rgba(26, 26, 34, 0.04);
+}
+
+.stepTitle {
+  font-family: var(--cm-font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: normal;
+  color: var(--cm-ink);
+}
+
+.stepBody {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--cm-body);
+  max-width: 36ch;
+}
+
+.code {
+  font-family: var(--cm-font-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--cm-radius-button);
+  background-color: var(--cm-paper-2);
+  color: var(--cm-blue-deep);
+  white-space: nowrap;
+}
+
+/* The connector line is hidden on mobile (steps stack vertically). */
+.connector {
+  display: none;
+}
+
+/* --- Desktop: horizontal row threaded by a thin spark line ----------------- */
+@media (min-width: 60rem) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  /* Thin --cm-spark line runs behind the markers, aligned to their vertical
+     center (markers are 2.75rem tall → center at 1.375rem). It starts and ends
+     at the middle of the first and last markers so it never dangles. */
+  .connector {
+    display: block;
+    position: absolute;
+    top: 1.375rem;
+    left: calc(16.666% + 1.375rem);
+    right: calc(16.666% + 1.375rem);
+    height: 2px;
+    transform: translateY(-1px);
+    background: linear-gradient(
+      to right,
+      var(--cm-spark) 0%,
+      var(--cm-gold) 100%
+    );
+    opacity: 0.7;
+  }
+}
+
+/* --- Footer line ----------------------------------------------------------- */
+.footer {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--cm-muted);
+  max-width: 52ch;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--cm-line);
+}

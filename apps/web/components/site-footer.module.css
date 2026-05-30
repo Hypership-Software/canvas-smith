@@ -1,0 +1,146 @@
+.footer {
+  background-color: var(--cm-night);
+  color: rgba(255, 255, 255, 0.72);
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--cm-night-line);
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 3rem 2rem;
+}
+
+/* --- Brand block ----------------------------------------------------------- */
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.875rem;
+  max-width: 22rem;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  font-size: 1.375rem;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+/* The forge spark — a small warm dot with a faint glow. */
+.spark {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--cm-radius-pill);
+  background-color: var(--cm-spark);
+  box-shadow: 0 0 12px 1px rgba(255, 161, 38, 0.6);
+}
+
+.tagline {
+  font-family: var(--cm-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* --- Social ---------------------------------------------------------------- */
+.social {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--cm-radius-button);
+  border: 1px solid var(--cm-night-line);
+  color: rgba(255, 255, 255, 0.7);
+  transition:
+    color 0.2s var(--cm-ease),
+    border-color 0.2s var(--cm-ease),
+    background-color 0.2s var(--cm-ease);
+}
+
+.socialLink:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.28);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* --- Link columns ---------------------------------------------------------- */
+.columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem 3.5rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.columnHeading {
+  font-family: var(--cm-font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.columnLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  font-family: var(--cm-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.2s var(--cm-ease);
+}
+
+.link:hover {
+  color: var(--cm-blue-bright);
+}
+
+/* --- Legal ----------------------------------------------------------------- */
+.legal {
+  max-width: 70ch;
+  margin: 3rem 0 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--cm-night-line);
+  font-family: var(--cm-font-body);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.48);
+}
+
+@media (max-width: 720px) {
+  .top {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .columns {
+    gap: 2rem;
+  }
+}

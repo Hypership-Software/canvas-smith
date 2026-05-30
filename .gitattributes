@@ -1,0 +1,12 @@
+# Normalize line endings to LF in the repo (the plugin + registry files are
+# cloned by the Claude Code marketplace and copied into user projects across OSes).
+* text=auto eol=lf
+
+# Binary assets — never normalize.
+*.png binary
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.woff binary
+*.woff2 binary

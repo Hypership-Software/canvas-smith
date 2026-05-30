@@ -1,0 +1,29 @@
+.section {
+  padding-block: var(--cm-section-pad); /* clamp(4rem, 10vw, 8rem) */
+}
+
+/* --- Tones ----------------------------------------------------------------- */
+.paper {
+  background-color: var(--cm-paper);
+  color: var(--cm-body);
+}
+
+.paper2 {
+  background-color: var(--cm-paper-2);
+  color: var(--cm-body);
+}
+
+.surface {
+  background-color: var(--cm-surface);
+  color: var(--cm-body);
+}
+
+.night {
+  background-color: var(--cm-night);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* On dark bands, force display headings to pure-ish white for contrast. */
+.night :is(h1, h2, h3) {
+  color: #ffffff;
+}

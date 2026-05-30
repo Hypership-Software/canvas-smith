@@ -1,0 +1,21 @@
+.eyebrow {
+  font-family: var(--cm-font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.default {
+  color: var(--cm-blue-deep);
+}
+
+.spark {
+  color: var(--cm-spark);
+}
+
+.night {
+  color: var(--cm-blue-bright);
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-tabs",
+  "type": "registry:ui",
+  "title": "Page Tabs",
+  "description": "Canvas Tabs bound to a content-switch layout for in-page navigation between panels.",
+  "author": "Canvasmith <https://canvasmith.dev>",
+  "dependencies": [
+    "@workday/canvas-kit-react@^15.0.6",
+    "@workday/canvas-kit-styling@^15.0.6",
+    "@workday/canvas-tokens-web@^4.3.0",
+    "@emotion/react@^11"
+  ],
+  "files": [
+    {
+      "path": "registry/canvasmith/ui/page-tabs.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\n\nimport {Tabs, useTabsModel} from '@workday/canvas-kit-react/tabs';\nimport {Box} from '@workday/canvas-kit-react/layout';\nimport {createStyles} from '@workday/canvas-kit-styling';\nimport {system} from '@workday/canvas-tokens-web';\n\n/** A single tab: a stable id, a visible label, and the panel content. */\nexport interface PageTab {\n  /** Stable identifier. Wires the tab to its panel and is the value of `defaultTab`. */\n  id: string;\n  /** The tab's visible label (also its accessible name). */\n  label: React.ReactNode;\n  /**\n   * Optional plain-text version of `label`, used for the overflow menu and\n   * type-ahead. Required for accessibility when `label` is not a plain string.\n   */\n  textValue?: string;\n  /** The content rendered in the tab panel when the tab is active. */\n  content: React.ReactNode;\n}\n\nexport interface PageTabsProps {\n  /** The tabs to render, in order. */\n  tabs: PageTab[];\n  /**\n   * The `id` of the tab selected on first render. Falls back to the first tab.\n   */\n  defaultTab?: string;\n  /**\n   * Called when the active tab changes, with the newly selected tab's `id`.\n   */\n  onTabChange?: (id: string) => void;\n  /**\n   * Accessible name for the overflow menu button shown when tabs do not fit.\n   * @default 'More tabs'\n   */\n  overflowLabel?: string;\n}\n\nconst listWrapperStyles = createStyles({\n  borderBlockEnd: `${system.space.half} solid ${system.color.border.divider}`,\n});\n\nconst panelWrapperStyles = createStyles({\n  paddingBlockStart: system.space.x6,\n});\n\nconst getId = (item: PageTab) => item.id;\nconst getTextValue = (item: PageTab) =>\n  item.textValue ?? (typeof item.label === 'string' ? item.label : item.id);\n\n/**\n * `PageTabs` renders a content-switching tab layout on top of the Canvas `Tabs`\n * compound. The model handles roving tabindex, `role=\"tab\"`/`role=\"tabpanel\"`,\n * `aria-selected`/`aria-controls`, arrow-key navigation, and overflow: tabs that do\n * not fit collapse into an accessible overflow menu automatically.\n *\n * Tabs are driven by the dynamic `items` API so the overflow menu and type-ahead stay\n * correct; each panel is matched to its tab by `id`, independent of position.\n *\n * ```tsx\n * <PageTabs\n *   defaultTab=\"overview\"\n *   tabs={[\n *     {id: 'overview', label: 'Overview', content: <OverviewPanel />},\n *     {id: 'activity', label: 'Activity', content: <ActivityPanel />},\n *     {id: 'settings', label: 'Settings', content: <SettingsPanel />},\n *   ]}\n *   onTabChange={id => console.log('selected', id)}\n * />\n * ```\n */\nexport const PageTabs = ({\n  tabs,\n  defaultTab,\n  onTabChange,\n  overflowLabel = 'More tabs',\n}: PageTabsProps) => {\n  const initialTab = defaultTab ?? tabs[0]?.id ?? '';\n\n  const model = useTabsModel({\n    items: tabs,\n    getId,\n    getTextValue,\n    initialTab,\n    onSelect: data => onTabChange?.(data.id),\n  });\n\n  return (\n    <Tabs model={model}>\n      <Box cs={listWrapperStyles}>\n        <Tabs.List\n          overflowButton={\n            <Tabs.OverflowButton aria-label={overflowLabel}>\n              {overflowLabel}\n            </Tabs.OverflowButton>\n          }\n        >\n          {(item: PageTab) => <Tabs.Item data-id={item.id}>{item.label}</Tabs.Item>}\n        </Tabs.List>\n      </Box>\n\n      {/* Overflowed tabs collapse into this menu automatically. */}\n      <Tabs.Menu.Popper>\n        <Tabs.Menu.Card>\n          <Tabs.Menu.List>\n            {(item: PageTab) => (\n              <Tabs.Menu.Item data-id={item.id}>{item.label}</Tabs.Menu.Item>\n            )}\n          </Tabs.Menu.List>\n        </Tabs.Menu.Card>\n      </Tabs.Menu.Popper>\n\n      <Box cs={panelWrapperStyles}>\n        <Tabs.Panels>\n          {(item: PageTab) => (\n            <Tabs.Panel data-id={item.id}>{item.content}</Tabs.Panel>\n          )}\n        </Tabs.Panels>\n      </Box>\n    </Tabs>\n  );\n};\n"
+    }
+  ],
+  "categories": [
+    "navigation",
+    "layout"
+  ]
+}

@@ -1,0 +1,44 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--cm-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--cm-muted);
+  background-color: transparent;
+  border: 1px solid var(--cm-line);
+  border-radius: 6px;
+  padding: 0.375rem 0.625rem;
+  cursor: pointer;
+  transition:
+    color 0.2s var(--cm-ease),
+    border-color 0.2s var(--cm-ease),
+    background-color 0.2s var(--cm-ease);
+}
+
+.button:hover {
+  color: var(--cm-blue);
+  border-color: var(--cm-blue);
+}
+
+.copied {
+  color: var(--cm-success);
+  border-color: var(--cm-success);
+}
+
+.copied:hover {
+  color: var(--cm-success);
+  border-color: var(--cm-success);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  display: inline-block;
+}

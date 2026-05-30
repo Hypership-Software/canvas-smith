@@ -1,0 +1,28 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "canvasmith",
+  "metadata": {
+    "description": "Workday-native UI for Claude. Skills + real Canvas Kit references that make any AI-generated front-end look and feel like Workday."
+  },
+  "owner": {
+    "name": "Kyle",
+    "email": "kyle@hypership.tech"
+  },
+  "plugins": [
+    {
+      "name": "canvasmith",
+      "description": "Make any AI-generated front-end look and feel Workday-native, using real Workday Canvas Kit references. Flagship canvas-ui skill plus /canvasmith:init, :build, :add, :convert, :tokens, :component, :audit, and :docs.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Kyle",
+        "email": "kyle@hypership.tech"
+      },
+      "source": "./packages/canvasmith",
+      "category": "design",
+      "homepage": "https://canvasmith.dev",
+      "repository": "https://github.com/canvasmith/canvasmith",
+      "license": "MIT",
+      "tags": ["design", "workday", "canvas", "ui", "enterprise", "design-system", "skills"]
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+/* =============================================================================
+   Canvasmith marketing site — global stylesheet
+   -----------------------------------------------------------------------------
+   STYLING APPROACH (mandate):
+   This site is NOT Tailwind and NOT Emotion. Styling is done with **CSS Modules**
+   (a co-located NAME.module.css beside every component) layered on top of the
+   global `--cm-*` design tokens declared in this file.
+
+   Emotion / Canvas Kit styling is reserved EXCLUSIVELY for the live Canvas Kit
+   demo (components/canvas/canvas-live.tsx). Nothing else on the marketing site
+   may import Emotion or Canvas Kit — the brand layer is intentionally decoupled
+   from the product layer so the landing page reads as its own warm, editorial
+   brand, while the demo proves the real packages work.
+
+   Token contract for stage-2 components:
+   - Brand / color / neutral / state tokens live under `:root` as `--cm-*`.
+   - Font families are wired to the `next/font` CSS variables exported from
+     app/layout.tsx (`--font-display`, `--font-body`, `--font-mono`).
+   - Consume tokens directly in *.module.css, e.g. `color: var(--cm-body)`.
+   ============================================================================ */
+
+:root {
+  /* --- Brand ------------------------------------------------------------- */
+  --cm-blue: #0875e1; /* Canvas blueberry400 — trust anchor, primary CTA, links, focus */
+  --cm-blue-deep: #004387; /* blueberry600 — CTA hover/pressed, deep accents */
+  --cm-blue-bright: #40a0ff; /* blueberry300 — glow/highlight on dark, code tokens */
+  --cm-spark: #ffa126; /* cantaloupe400 — the "forge spark" warm accent */
+  --cm-gold: #ffc629; /* sourLemon400 — signature Canvas gold */
+
+  /* --- Warm neutral foundation (editorial warmth, never cold grey) ------- */
+  --cm-ink: #1a1a22; /* primary heading text, near-black with a cool-warm bias */
+  --cm-body: #333333; /* blackPepper400 — body copy */
+  --cm-muted: #6b6b73; /* captions, secondary text */
+  --cm-paper: #fbfaf7; /* warm off-white page background — the signature */
+  --cm-paper-2: #f4f2ec; /* warm panel background */
+  --cm-surface: #ffffff; /* card / surface */
+  --cm-line: #e7e3da; /* warm hairline borders */
+
+  /* --- Dark "night" bands (hero / footer / code) ------------------------- */
+  --cm-night: #0b1020; /* deep navy-ink, premium — NOT pure black */
+  --cm-night-2: #121a30; /* raised panel on night */
+  --cm-night-line: rgba(255, 255, 255, 0.1); /* hairline on night */
+
+  /* --- States ------------------------------------------------------------ */
+  --cm-success: #43c463; /* greenApple400 — installed / done state */
+  --cm-focus: #0875e1; /* focus ring = brand blue */
+
+  /* --- Type families (wired to next/font variables) ---------------------- */
+  --cm-font-display: var(--font-display), "Fraunces", Georgia, "Times New Roman", serif;
+  --cm-font-body: var(--font-body), "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cm-font-mono: var(--font-mono), "Roboto Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* --- Layout primitives ------------------------------------------------- */
+  --cm-container: 1120px;
+  --cm-container-pad: clamp(1rem, 5vw, 2.5rem);
+  --cm-section-pad: clamp(4rem, 10vw, 8rem);
+
+  /* --- Radius (slightly softer/premium vs. the product) ------------------ */
+  --cm-radius-button: 8px;
+  --cm-radius-card: 12px;
+  --cm-radius-pill: 999px;
+
+  /* --- Motion (mirror lib/motion.ts for CSS-only transitions) ------------ */
+  --cm-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =============================================================================
+   Modern reset
+   ============================================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Offset anchored scroll so sticky nav never covers section headings. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--cm-paper);
+  color: var(--cm-body);
+  font-family: var(--cm-font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#__next,
+#root {
+  isolation: isolate;
+}
+
+/* =============================================================================
+   Base typography — Roboto body on warm paper, Fraunces for display headings
+   ============================================================================ */
+h1,
+h2,
+h3 {
+  font-family: var(--cm-font-display);
+  color: var(--cm-ink);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h4,
+h5,
+h6 {
+  font-family: var(--cm-font-body);
+  color: var(--cm-ink);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 1.04;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-family: var(--cm-font-body);
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--cm-font-mono);
+  font-size: 0.9375rem;
+}
+
+::selection {
+  background-color: var(--cm-blue);
+  color: #ffffff;
+}
+
+/* =============================================================================
+   Focus — brand-blue 2px ring with 2px offset, only for keyboard users
+   ============================================================================ */
+:focus-visible {
+  outline: 2px solid var(--cm-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Suppress the legacy outline for mouse users where :focus-visible is honored. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* =============================================================================
+   Reduced-motion safety — disable all non-essential motion
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

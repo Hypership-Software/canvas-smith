@@ -1,0 +1,338 @@
+.header {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 50;
+  /* Transparent over the dark hero band by default. */
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 0.3s var(--cm-ease),
+    border-color 0.3s var(--cm-ease),
+    box-shadow 0.3s var(--cm-ease);
+}
+
+/* Frosted sticky bar once scrolled past the hero edge. */
+.scrolled {
+  background-color: color-mix(in srgb, var(--cm-paper) 82%, transparent);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom-color: var(--cm-line);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.02);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: var(--cm-container);
+  margin-inline: auto;
+  padding-inline: var(--cm-container-pad);
+  block-size: 4rem;
+}
+
+/* --- Brand ----------------------------------------------------------------- */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.spark {
+  flex: 0 0 auto;
+  color: var(--cm-spark);
+  /* One-frame warm spark on load (decorative; killed by reduced-motion). */
+  animation: spark-strike 900ms var(--cm-ease) 200ms 1 both;
+}
+
+@keyframes spark-strike {
+  0% {
+    transform: scale(0.6) rotate(-12deg);
+    opacity: 0;
+    filter: drop-shadow(0 0 0 transparent);
+  }
+  40% {
+    opacity: 1;
+    filter: drop-shadow(0 0 6px var(--cm-spark));
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 0 transparent);
+  }
+}
+
+.wordmark {
+  font-family: var(--cm-font-display);
+  font-weight: 600;
+  font-size: 1.3125rem;
+  letter-spacing: -0.01em;
+  /* White over the transparent dark-hero state. */
+  color: #ffffff;
+  transition: color 0.3s var(--cm-ease);
+}
+
+.scrolled .wordmark {
+  color: var(--cm-ink);
+}
+
+/* --- Center links ---------------------------------------------------------- */
+.links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  margin: 0;
+  margin-inline-start: auto;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  font-family: var(--cm-font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 0.2s var(--cm-ease);
+  padding-block: 0.25rem;
+}
+
+.link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--cm-spark);
+}
+
+.scrolled .link {
+  color: var(--cm-muted);
+}
+
+.scrolled .link:hover {
+  color: var(--cm-blue);
+  text-decoration-color: var(--cm-blue);
+}
+
+/* --- Right-side actions ---------------------------------------------------- */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 0 auto;
+}
+
+.star {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  font-family: var(--cm-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--cm-night-line);
+  border-radius: var(--cm-radius-pill);
+  padding: 0.4375rem 0.75rem;
+  transition:
+    color 0.2s var(--cm-ease),
+    border-color 0.2s var(--cm-ease),
+    background-color 0.2s var(--cm-ease);
+}
+
+.star:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.scrolled .star {
+  color: var(--cm-body);
+  border-color: var(--cm-line);
+}
+
+.scrolled .star:hover {
+  border-color: var(--cm-blue);
+  color: var(--cm-blue);
+  background-color: transparent;
+}
+
+.starIcon {
+  flex: 0 0 auto;
+}
+
+.starLabel {
+  /* Hide the redundant "Star" word on tighter desktop widths. */
+}
+
+.starCount {
+  font-family: var(--cm-font-mono);
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.cta {
+  /* Slightly tighter than the default Button for the bar. */
+  padding-block: 0.5625rem;
+  padding-inline: 1rem;
+  font-size: 0.9375rem;
+}
+
+/* --- Hamburger (mobile only) ----------------------------------------------- */
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  border-radius: var(--cm-radius-button);
+  color: #ffffff;
+  background-color: transparent;
+}
+
+.scrolled .hamburger {
+  color: var(--cm-ink);
+}
+
+.hamburgerBox {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  inline-size: 20px;
+}
+
+.hamburgerBar {
+  display: block;
+  block-size: 2px;
+  inline-size: 100%;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition:
+    transform 0.25s var(--cm-ease),
+    opacity 0.2s var(--cm-ease);
+}
+
+.hamburgerBox[data-open='true'] .hamburgerBar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburgerBox[data-open='true'] .hamburgerBar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerBox[data-open='true'] .hamburgerBar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* --- Mobile full-screen sheet ---------------------------------------------- */
+.sheet {
+  position: fixed;
+  inset: 4rem 0 0 0;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem var(--cm-container-pad) 2.5rem;
+  background-color: var(--cm-paper);
+  border-top: 1px solid var(--cm-line);
+  overflow-y: auto;
+  animation: sheet-in 0.25s var(--cm-ease) both;
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sheetLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sheetLink {
+  display: block;
+  font-family: var(--cm-font-display);
+  font-size: 1.625rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--cm-ink);
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--cm-line);
+}
+
+.sheetLink:hover {
+  color: var(--cm-blue);
+}
+
+.sheetActions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sheetStar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--cm-font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--cm-body);
+}
+
+.sheetStar .starCount {
+  color: var(--cm-muted);
+}
+
+.sheetCta {
+  width: 100%;
+}
+
+/* --- Responsive ------------------------------------------------------------ */
+@media (max-width: 880px) {
+  .links {
+    display: none;
+  }
+
+  .cta,
+  .star {
+    display: none;
+  }
+
+  .hamburger {
+    display: inline-flex;
+  }
+
+  .actions {
+    margin-inline-start: auto;
+  }
+}
+
+@media (min-width: 881px) {
+  .sheet {
+    display: none;
+  }
+}
+
+/* On medium-desktop, shed the "Star" word but keep the count. */
+@media (max-width: 1040px) and (min-width: 881px) {
+  .starLabel {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spark,
+  .sheet {
+    animation: none;
+  }
+}

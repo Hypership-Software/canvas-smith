@@ -1,0 +1,61 @@
+.block {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  border-radius: var(--cm-radius-button); /* 8px */
+  padding: 0.875rem 0.875rem 0.875rem 1.125rem;
+  background-color: var(--cm-night-2);
+  border: 1px solid var(--cm-night-line);
+}
+
+/* Primary — brand-blue left accent for the lead command. */
+.primary {
+  border-left: 3px solid var(--cm-blue);
+}
+
+/* Muted — quieter, no accent, lower-contrast surface. */
+.muted {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: var(--cm-night-line);
+  border-left: 3px solid var(--cm-night-line);
+}
+
+.code {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--cm-font-mono);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: #ffffff;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.prompt {
+  flex: 0 0 auto;
+  color: var(--cm-blue-bright);
+  font-weight: 500;
+  user-select: none;
+}
+
+.muted .prompt {
+  color: var(--cm-muted);
+}
+
+.command {
+  white-space: pre;
+}
+
+.action {
+  flex: 0 0 auto;
+}
+
+/* The CopyButton sits on a dark surface here — lift its contrast. */
+.block :global(.icon),
+.block button {
+  color: rgba(255, 255, 255, 0.7);
+}

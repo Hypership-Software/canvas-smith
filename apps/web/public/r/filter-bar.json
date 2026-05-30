@@ -1,0 +1,27 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "filter-bar",
+  "type": "registry:ui",
+  "title": "Filter Bar",
+  "description": "A toolbar row of filters: Select / Combobox, Pill or SegmentedControl, and a search TextInput.",
+  "author": "Canvasmith <https://canvasmith.dev>",
+  "dependencies": [
+    "@workday/canvas-kit-react@^15.0.6",
+    "@workday/canvas-kit-preview-react@^15.0.6",
+    "@workday/canvas-kit-styling@^15.0.6",
+    "@workday/canvas-tokens-web@^4.3.0",
+    "@workday/canvas-system-icons-web@^4.0.4",
+    "@emotion/react@^11"
+  ],
+  "files": [
+    {
+      "path": "registry/canvasmith/ui/filter-bar.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport {Flex} from '@workday/canvas-kit-react/layout';\nimport {InputGroup, TextInput} from '@workday/canvas-kit-react/text-input';\nimport {SystemIcon} from '@workday/canvas-kit-react/icon';\nimport {Pill} from '@workday/canvas-kit-react/pill';\nimport {searchIcon} from '@workday/canvas-system-icons-web';\nimport {createStyles, cssVar} from '@workday/canvas-kit-styling';\nimport {system} from '@workday/canvas-tokens-web';\n\n/** An active, removable filter chip rendered as a Canvas `Pill`. */\nexport interface FilterChip {\n  /** Stable identifier passed back to `onRemoveChip`. */\n  id: string;\n  /** Visible chip label. */\n  label: string;\n}\n\nexport interface FilterBarProps {\n  /** Controlled value of the search field. */\n  searchValue?: string;\n  /** Called with the new search string on every keystroke. */\n  onSearchChange?: (value: string) => void;\n  /** Placeholder for the search field. Defaults to \"Search\". */\n  searchPlaceholder?: string;\n  /** Accessible label for the search field. Defaults to \"Search\". */\n  searchAriaLabel?: string;\n  /**\n   * Filter controls (e.g. `Select` / `Combobox` / `SegmentedControl`) rendered\n   * inline after the search field.\n   */\n  filters?: React.ReactNode;\n  /** Active filter chips shown on a second wrapping row. */\n  chips?: FilterChip[];\n  /** Called with a chip id when its remove button is activated. */\n  onRemoveChip?: (id: string) => void;\n  /**\n   * Extra trailing content (e.g. a \"Clear all\" `TertiaryButton`) aligned to the\n   * end of the toolbar row.\n   */\n  children?: React.ReactNode;\n  /** Pass-through class name. */\n  className?: string;\n}\n\nconst containerStyles = createStyles({\n  display: 'flex',\n  flexDirection: 'column',\n  gap: system.space.x3,\n});\n\nconst toolbarRowStyles = createStyles({\n  alignItems: 'center',\n  gap: system.space.x3,\n  flexWrap: 'wrap',\n});\n\nconst searchGroupStyles = createStyles({\n  flexGrow: 1,\n  flexBasis: '16rem',\n  maxInlineSize: '24rem',\n});\n\nconst trailingStyles = createStyles({\n  alignItems: 'center',\n  gap: system.space.x2,\n  marginInlineStart: 'auto',\n});\n\nconst chipRowStyles = createStyles({\n  alignItems: 'center',\n  gap: system.space.x2,\n  flexWrap: 'wrap',\n});\n\n/**\n * A responsive filter toolbar: a leading search field (with inset search icon),\n * inline `Select` / `Combobox` / `SegmentedControl` filters, optional trailing\n * actions, and a wrapping row of removable filter `Pill` chips. Lays out on a\n * wrapping `Flex` with `system.space` gaps so it reflows on narrow viewports.\n */\nexport const FilterBar = ({\n  searchValue,\n  onSearchChange,\n  searchPlaceholder = 'Search',\n  searchAriaLabel = 'Search',\n  filters,\n  chips,\n  onRemoveChip,\n  children,\n  className,\n}: FilterBarProps) => (\n  <Flex as=\"section\" role=\"search\" aria-label=\"Filters\" cs={containerStyles} className={className}>\n    <Flex cs={toolbarRowStyles}>\n      <InputGroup cs={searchGroupStyles}>\n        <InputGroup.InnerStart pointerEvents=\"none\">\n          <SystemIcon icon={searchIcon} size=\"sm\" color={cssVar(system.color.icon.soft)} />\n        </InputGroup.InnerStart>\n        <InputGroup.Input\n          as={TextInput}\n          type=\"search\"\n          aria-label={searchAriaLabel}\n          placeholder={searchPlaceholder}\n          value={searchValue}\n          onChange={\n            onSearchChange\n              ? (e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)\n              : undefined\n          }\n        />\n      </InputGroup>\n\n      {filters}\n\n      {children != null ? <Flex cs={trailingStyles}>{children}</Flex> : null}\n    </Flex>\n\n    {chips && chips.length > 0 ? (\n      <Flex cs={chipRowStyles} role=\"list\" aria-label=\"Active filters\">\n        {chips.map(chip => (\n          <Pill key={chip.id} variant=\"removable\" role=\"listitem\">\n            <Pill.Label>{chip.label}</Pill.Label>\n            <Pill.IconButton\n              aria-label={`Remove ${chip.label}`}\n              onClick={() => onRemoveChip?.(chip.id)}\n            />\n          </Pill>\n        ))}\n      </Flex>\n    ) : null}\n  </Flex>\n);\n\nexport default FilterBar;\n"
+    }
+  ],
+  "categories": [
+    "forms",
+    "data-display"
+  ]
+}

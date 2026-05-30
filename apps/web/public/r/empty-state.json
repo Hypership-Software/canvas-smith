@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "empty-state",
+  "type": "registry:ui",
+  "title": "Empty State",
+  "description": "A zero-data placeholder: Canvas SystemIcon, Heading, BodyText, and a primary call-to-action button.",
+  "author": "Canvasmith <https://canvasmith.dev>",
+  "dependencies": [
+    "@workday/canvas-kit-react@^15.0.6",
+    "@workday/canvas-kit-styling@^15.0.6",
+    "@workday/canvas-tokens-web@^4.3.0",
+    "@workday/canvas-system-icons-web@^4.0.4",
+    "@emotion/react@^11"
+  ],
+  "files": [
+    {
+      "path": "registry/canvasmith/ui/empty-state.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport {Flex} from '@workday/canvas-kit-react/layout';\nimport {Heading, BodyText} from '@workday/canvas-kit-react/text';\nimport {PrimaryButton} from '@workday/canvas-kit-react/button';\nimport {SystemIconCircle} from '@workday/canvas-kit-react/icon';\nimport {useUniqueId} from '@workday/canvas-kit-react/common';\nimport {activityStreamIcon, type CanvasSystemIcon} from '@workday/canvas-system-icons-web';\nimport {createStyles, cssVar} from '@workday/canvas-kit-styling';\nimport {system} from '@workday/canvas-tokens-web';\n\n/** A single call-to-action rendered as a `PrimaryButton` in the empty state. */\nexport interface EmptyStateAction {\n  /** Button label. */\n  label: string;\n  /** Click handler. */\n  onClick: () => void;\n  /** Optional leading icon. */\n  icon?: CanvasSystemIcon;\n}\n\nexport interface EmptyStateProps {\n  /**\n   * Optional illustrative system icon. Decorative — rendered inside a tonal\n   * `SystemIconCircle`. Defaults to a generic activity glyph.\n   */\n  icon?: CanvasSystemIcon;\n  /** Headline describing the empty/zero-data state. */\n  title: string;\n  /** Optional supporting copy explaining what to do next. */\n  description?: React.ReactNode;\n  /** Optional primary call-to-action. */\n  action?: EmptyStateAction;\n  /** Pass-through class name. */\n  className?: string;\n}\n\nconst containerStyles = createStyles({\n  flexDirection: 'column',\n  alignItems: 'center',\n  justifyContent: 'center',\n  textAlign: 'center',\n  gap: system.space.x4,\n  paddingBlock: system.space.x16,\n  paddingInline: system.space.x8,\n  minBlockSize: '20rem',\n});\n\nconst titleStyles = createStyles({\n  margin: 0,\n  color: cssVar(system.color.fg.stronger),\n});\n\nconst descriptionStyles = createStyles({\n  margin: 0,\n  maxInlineSize: '28rem',\n  color: cssVar(system.color.fg.muted.default),\n});\n\n/**\n * A centered zero-data view: an illustrative icon, a heading, supporting copy,\n * and one clear primary action. Uses semantic muted text for the description\n * and Canvas spacing tokens for vertical rhythm. The icon is decorative\n * (`aria-hidden`); the heading is linked to the region for assistive tech.\n */\nexport const EmptyState = ({\n  icon = activityStreamIcon,\n  title,\n  description,\n  action,\n  className,\n}: EmptyStateProps) => {\n  const titleId = useUniqueId();\n\n  return (\n    <Flex as=\"section\" cs={containerStyles} className={className} aria-labelledby={titleId}>\n      <SystemIconCircle\n        icon={icon}\n        size=\"xl\"\n        background={cssVar(system.color.bg.alt.soft)}\n        color={cssVar(system.color.icon.soft)}\n      />\n      <Heading id={titleId} as=\"h2\" size=\"small\" cs={titleStyles}>\n        {title}\n      </Heading>\n      {description != null ? (\n        <BodyText as=\"p\" size=\"medium\" cs={descriptionStyles}>\n          {description}\n        </BodyText>\n      ) : null}\n      {action ? (\n        <PrimaryButton icon={action.icon} onClick={action.onClick}>\n          {action.label}\n        </PrimaryButton>\n      ) : null}\n    </Flex>\n  );\n};\n\nexport default EmptyState;\n"
+    }
+  ],
+  "categories": [
+    "feedback",
+    "data-display"
+  ]
+}

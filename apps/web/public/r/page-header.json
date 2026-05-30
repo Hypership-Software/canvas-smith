@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-header",
+  "type": "registry:ui",
+  "title": "Page Header",
+  "description": "A page heading region: Breadcrumbs, a Canvas Heading, and a primary/secondary action button cluster.",
+  "author": "Canvasmith <https://canvasmith.dev>",
+  "dependencies": [
+    "@workday/canvas-kit-react@^15.0.6",
+    "@workday/canvas-kit-styling@^15.0.6",
+    "@workday/canvas-tokens-web@^4.3.0",
+    "@workday/canvas-system-icons-web@^4.0.4",
+    "@emotion/react@^11"
+  ],
+  "files": [
+    {
+      "path": "registry/canvasmith/ui/page-header.tsx",
+      "type": "registry:ui",
+      "content": "'use client';\n\nimport * as React from 'react';\nimport {Breadcrumbs} from '@workday/canvas-kit-react/breadcrumbs';\nimport {Flex, Box} from '@workday/canvas-kit-react/layout';\nimport {Heading, BodyText} from '@workday/canvas-kit-react/text';\nimport {createStyles, cssVar} from '@workday/canvas-kit-styling';\nimport {system} from '@workday/canvas-tokens-web';\n\n/** A single breadcrumb entry. The final crumb (no `href`) renders as the current page. */\nexport interface PageHeaderCrumb {\n  /** Visible crumb label. */\n  label: string;\n  /** Destination. Omit on the final/current crumb. */\n  href?: string;\n}\n\nexport interface PageHeaderProps {\n  /** Page title rendered as the primary heading. */\n  title: string;\n  /** Optional supporting subtitle/description shown beneath the title. */\n  subtitle?: React.ReactNode;\n  /** Optional breadcrumb trail rendered above the title. */\n  breadcrumbs?: PageHeaderCrumb[];\n  /**\n   * Optional action cluster, right-aligned on the title row. Pass Canvas\n   * buttons (e.g. `PrimaryButton` / `SecondaryButton`).\n   */\n  actions?: React.ReactNode;\n  /** Heading level for the title element. Defaults to `h1`. */\n  headingLevel?: 'h1' | 'h2';\n  /** Pass-through class name. */\n  className?: string;\n}\n\nconst containerStyles = createStyles({\n  display: 'flex',\n  flexDirection: 'column',\n  gap: system.space.x4,\n  paddingBlockEnd: system.space.x4,\n  borderBlockEnd: `${cssVar(system.shape.half)} solid ${cssVar(system.color.border.divider)}`,\n});\n\nconst titleRowStyles = createStyles({\n  alignItems: 'flex-start',\n  justifyContent: 'space-between',\n  gap: system.space.x4,\n  flexWrap: 'wrap',\n});\n\nconst titleStyles = createStyles({\n  margin: 0,\n  color: cssVar(system.color.fg.stronger),\n});\n\nconst subtitleStyles = createStyles({\n  margin: 0,\n  marginBlockStart: system.space.x1,\n  color: cssVar(system.color.fg.muted.default),\n});\n\nconst actionsStyles = createStyles({\n  alignItems: 'center',\n  gap: system.space.x3,\n  flexWrap: 'wrap',\n  flexShrink: 0,\n});\n\n/**\n * A page-level header: an optional `Breadcrumbs` trail (named landmark), a\n * primary `Heading` with optional subtitle, and a right-aligned action button\n * cluster. Lays out on a wrapping `Flex` using `system.space` rhythm so the\n * actions drop below the title gracefully on narrow viewports.\n */\nexport const PageHeader = ({\n  title,\n  subtitle,\n  breadcrumbs,\n  actions,\n  headingLevel = 'h1',\n  className,\n}: PageHeaderProps) => (\n  <Box as=\"header\" cs={containerStyles} className={className}>\n    {breadcrumbs && breadcrumbs.length > 0 ? (\n      <Breadcrumbs aria-label=\"Breadcrumb\">\n        <Breadcrumbs.List>\n          {breadcrumbs.map((crumb, index) => {\n            const isLast = index === breadcrumbs.length - 1;\n            if (isLast || !crumb.href) {\n              return (\n                <Breadcrumbs.CurrentItem key={`${crumb.label}-${index}`}>\n                  {crumb.label}\n                </Breadcrumbs.CurrentItem>\n              );\n            }\n            return (\n              <Breadcrumbs.Item key={`${crumb.label}-${index}`}>\n                <Breadcrumbs.Link href={crumb.href}>{crumb.label}</Breadcrumbs.Link>\n              </Breadcrumbs.Item>\n            );\n          })}\n        </Breadcrumbs.List>\n      </Breadcrumbs>\n    ) : null}\n\n    <Flex cs={titleRowStyles}>\n      <Box cs={{minInlineSize: 0}}>\n        <Heading as={headingLevel} size=\"medium\" cs={titleStyles}>\n          {title}\n        </Heading>\n        {subtitle != null ? (\n          <BodyText as=\"p\" size=\"small\" cs={subtitleStyles}>\n            {subtitle}\n          </BodyText>\n        ) : null}\n      </Box>\n      {actions != null ? <Flex cs={actionsStyles}>{actions}</Flex> : null}\n    </Flex>\n  </Box>\n);\n\nexport default PageHeader;\n"
+    }
+  ],
+  "categories": [
+    "layout",
+    "navigation"
+  ]
+}

@@ -1,0 +1,272 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.heading {
+  max-width: 18ch;
+}
+
+.lead {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--cm-body);
+  max-width: 60ch;
+}
+
+.lead em {
+  font-style: italic;
+  color: var(--cm-ink);
+}
+
+/* --- Asymmetric grid ------------------------------------------------------- */
+/* Mobile: single column, everything stacks. Desktop: a 3-column rhythm where the
+   lead statement spans two columns, the two notes sit beneath it, and the slop
+   visual takes the full third column down the right. Deliberately NOT a row of
+   three identical cards. */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.point {
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius-card); /* 12px */
+  background-color: var(--cm-surface);
+  padding: 1.5rem;
+}
+
+.pointTitle {
+  font-family: var(--cm-font-body);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: normal;
+  color: var(--cm-ink);
+  margin-bottom: 0.5rem;
+}
+
+.pointBody {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--cm-body);
+}
+
+.codeInline {
+  font-family: var(--cm-font-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--cm-radius-button);
+  background-color: var(--cm-paper-2);
+  color: var(--cm-blue-deep);
+}
+
+/* The wide lead statement gets a warm spark accent on its left edge so the row
+   reads as a hierarchy, not three peers. */
+.pointWide {
+  border-left: 3px solid var(--cm-spark);
+}
+
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      'wide wide slop'
+      'noteA noteB slop';
+    align-items: start;
+  }
+
+  .pointWide {
+    grid-area: wide;
+  }
+
+  .point:nth-of-type(2) {
+    grid-area: noteA;
+  }
+
+  .point:nth-of-type(3) {
+    grid-area: noteB;
+  }
+
+  .slop {
+    grid-area: slop;
+    height: 100%;
+  }
+}
+
+/* --- The bland "AI slop dashboard" stand-in -------------------------------- */
+.slop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--cm-radius-card);
+  border: 1px solid var(--cm-line);
+  background-color: #eceae4;
+  overflow: hidden;
+  /* Drained of life on purpose — this is what "nobody's UI" looks like. */
+  filter: grayscale(0.85) contrast(0.92);
+}
+
+.slopChrome {
+  display: flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.625rem 0.875rem;
+  background-color: #e3e0d9;
+  border-bottom: 1px solid var(--cm-line);
+}
+
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--cm-radius-pill);
+  background-color: #bdb9b0;
+}
+
+.slopBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  padding: 1rem;
+}
+
+.slopHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slopLogo {
+  width: 2.5rem;
+  height: 0.75rem;
+  border-radius: 3px; /* deliberately off the 8px grid */
+  background-color: #b7b3aa;
+}
+
+.slopNav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.slopNav i {
+  width: 1.75rem;
+  height: 0.5rem;
+  border-radius: 3px;
+  background-color: #c9c5bc;
+}
+
+/* Centered hero with a flat slab "button" — the canonical slop layout. */
+.slopHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.slopH1 {
+  width: 70%;
+  height: 0.875rem;
+  border-radius: 3px;
+  background-color: #a9a59c;
+}
+
+.slopSub {
+  width: 50%;
+  height: 0.5rem;
+  border-radius: 3px;
+  background-color: #c4c0b7;
+}
+
+.slopCta {
+  margin-top: 0.25rem;
+  width: 5rem;
+  height: 1.25rem;
+  /* The generic "wrong blue" slab — a muted, off-brand indigo, desaturated. */
+  border-radius: 5px;
+  background-color: #8d93c0;
+}
+
+.slopCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.slopCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0.625rem;
+  border-radius: 5px; /* mismatched radius vs. chrome — intentional */
+  background-color: #f0eee8;
+  border: 1px solid #dedad1;
+}
+
+.slopCardIcon {
+  width: 1rem;
+  height: 1rem;
+  border-radius: var(--cm-radius-pill);
+  background-color: #cbc7be;
+}
+
+.slopCardLine {
+  height: 0.375rem;
+  border-radius: 2px;
+  background-color: #d4d0c7;
+}
+
+.slopCardLine.short {
+  width: 60%;
+}
+
+/* --- Red annotation pins --------------------------------------------------- */
+.pin {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  /* Pins read at full saturation — they sit above the desaturated mock. */
+  filter: none;
+  transform: translate(-2px, -50%);
+  pointer-events: none;
+}
+
+.pinDot {
+  flex: 0 0 auto;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: var(--cm-radius-pill);
+  background-color: #d92d20;
+  box-shadow:
+    0 0 0 3px rgba(217, 45, 32, 0.18),
+    0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.pinLabel {
+  font-family: var(--cm-font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #d92d20;
+  padding: 0.25rem 0.4375rem;
+  border-radius: var(--cm-radius-button);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.slopCaption {
+  font-family: var(--cm-font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--cm-muted);
+  padding: 0.75rem 1rem 1rem;
+  /* Caption is editorial copy, not part of the desaturated mock. */
+  filter: none;
+}

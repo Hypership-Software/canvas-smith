@@ -1,0 +1,182 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.heading {
+  max-width: 22ch;
+}
+
+.sub {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--cm-muted);
+  max-width: 56ch;
+}
+
+/* --- Grid: 3-col desktop / 2-col tablet / 1-col mobile --------------------- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 0;
+  margin-top: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 36rem) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- Block card ------------------------------------------------------------ */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.125rem 1.25rem;
+  background-color: var(--cm-paper);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius-card); /* 12px */
+  /* Hover lift is driven by motion's y; the border-color shift is CSS so it
+     respects the prefers-reduced-motion duration override in globals.css. */
+  transition: border-color 0.2s var(--cm-ease), box-shadow 0.2s var(--cm-ease);
+}
+
+.card:hover {
+  border-color: var(--cm-blue);
+  box-shadow: 0 6px 20px rgba(8, 117, 225, 0.08);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* The mono block name is the card's visual anchor (anti-slop — not an icon). */
+.blockName {
+  font-family: var(--cm-font-mono);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--cm-ink);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.cardBody {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--cm-body);
+}
+
+/* --- Category tag (shared color vocabulary with SkillsSection) ------------- */
+.tag {
+  flex: 0 0 auto;
+  font-family: var(--cm-font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.3125rem 0.5rem;
+  border-radius: var(--cm-radius-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+/* display content — blue family (the core workflow). */
+.blue {
+  color: var(--cm-blue-deep);
+  background-color: #eaf3fd; /* blueberry100-adjacent tint */
+  border-color: #cfe5fb;
+}
+
+/* forms / structure — neutral (structural). */
+.neutral {
+  color: var(--cm-body);
+  background-color: var(--cm-paper-2);
+  border-color: var(--cm-line);
+}
+
+/* interaction — spark/gold (the lively, eventful blocks earn the warm accent). */
+.spark {
+  color: #8a4b00;
+  background-color: #fff1dc; /* cantaloupe tint */
+  border-color: #ffd9a3;
+}
+
+/* full pages — muted (composed, highest level). */
+.muted {
+  color: var(--cm-muted);
+  background-color: rgba(107, 107, 115, 0.08);
+  border-color: rgba(107, 107, 115, 0.18);
+}
+
+/* --- Install panel --------------------------------------------------------- */
+.install {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  max-width: 44rem;
+}
+
+.installLabel {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--cm-ink);
+}
+
+.alt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.altLabel {
+  font-size: 0.8125rem;
+  color: var(--cm-muted);
+}
+
+.altRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 1rem;
+  background-color: var(--cm-paper-2);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius-button); /* 8px */
+}
+
+.altCode {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--cm-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--cm-body);
+  overflow-x: auto;
+  scrollbar-width: thin;
+  white-space: nowrap;
+}
+
+/* The CopyButton sits on the warm panel here — keep it muted to match. */
+.altRow button {
+  color: var(--cm-muted);
+  flex: 0 0 auto;
+}

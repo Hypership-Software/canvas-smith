@@ -1,0 +1,14 @@
+{
+  "name": "canvasmith",
+  "description": "Make any AI-generated front-end look and feel Workday-native, using real Workday Canvas Kit references. Flagship canvas-ui skill plus /canvasmith:init, :build, :add, :convert, :tokens, :component, :audit, and :docs.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Kyle",
+    "email": "kyle@hypership.tech"
+  },
+  "homepage": "https://canvasmith.dev",
+  "repository": "https://github.com/canvasmith/canvasmith",
+  "license": "MIT",
+  "keywords": ["workday", "canvas-kit", "design-system", "frontend", "ui", "enterprise"],
+  "skills": "./.claude/skills"
+}
