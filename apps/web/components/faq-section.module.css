@@ -1,12 +1,49 @@
+/* Full-width two-column layout: sticky intro on the left, accordion on the
+   right, so the content spans the same container gutters as the nav. */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 60rem) {
+  .intro {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
 .heading {
-  max-width: 16ch;
-  margin-block: 0.75rem 2.5rem;
+  max-width: 14ch;
+  margin: 0;
+}
+
+.introSub {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--cm-muted);
+  max-width: 34ch;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  max-width: 760px;
+  width: 100%;
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--cm-line);

@@ -2,9 +2,10 @@
   --wipe: 62%;
   position: relative;
   width: 100%;
-  /* Stable height so the two stacked layers never reflow as you wipe. */
-  aspect-ratio: 16 / 11;
-  min-height: 420px;
+  /* Fixed, content-appropriate height (the forms are ~480px tall) so the two
+     stacked layers never reflow as you wipe — and so the "after" screen fills
+     its container instead of floating in a too-tall box. */
+  block-size: clamp(500px, 44vw, 560px);
   border-radius: var(--cm-radius-card); /* 12px */
   overflow: hidden;
   background-color: var(--cm-surface);
@@ -159,7 +160,6 @@
 
 @media (max-width: 640px) {
   .root {
-    aspect-ratio: 3 / 4;
-    min-height: 540px;
+    block-size: 560px;
   }
 }

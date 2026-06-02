@@ -1,20 +1,12 @@
 'use client'
 
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
-
-import { PrimaryButton, SecondaryButton } from '@workday/canvas-kit-react/button'
-import { Card } from '@workday/canvas-kit-react/card'
-import { FormField } from '@workday/canvas-kit-react/form-field'
-import { TextInput } from '@workday/canvas-kit-react/text-input'
-import { Select } from '@workday/canvas-kit-react/select'
-import { SystemIcon } from '@workday/canvas-kit-react/icon'
-import { createStyles } from '@workday/canvas-kit-styling'
-import { system } from '@workday/canvas-tokens-web'
-import { calendarIcon } from '@workday/canvas-system-icons-web'
+import dynamic from 'next/dynamic'
 
 import { Section } from '@/components/ui/section'
-import CanvasLive from '@/components/canvas/canvas-live'
+import { TimeOffMock } from '@/components/showcase/mocks'
 import { fadeUp } from '@/lib/motion'
 import { WipeSlider } from './wipe-slider'
 import styles from './before-after.module.css'
@@ -24,12 +16,12 @@ import styles from './before-after.module.css'
  *
  * Renders the same "worker time-off request" form twice inside a <WipeSlider>:
  *   LEFT  (before) — deliberately generic "AI slop": plain HTML + inline styles,
- *                    the wrong blue (#3b82f6), a system/Inter-ish stack, mismatched
+ *                    the wrong blue (#3b82f6), an Inter-ish stack, mismatched
  *                    radii, and an emoji icon. No design system in sight.
- *   RIGHT (after)  — the SAME form built from REAL Canvas Kit components inside
- *                    <CanvasLive>: PrimaryButton/SecondaryButton, FormField +
- *                    TextInput, Select, Card, Roboto, blueberry, a system icon,
- *                    and correct system.space rhythm.
+ *   RIGHT (after)  — the SAME form built from REAL Canvas Kit components. It is
+ *                    loaded CLIENT-ONLY (next/dynamic, ssr:false) behind a mount
+ *                    gate, with a token-styled placeholder, so Canvas Kit's
+ *                    per-process style hashes never cause a hydration mismatch.
  *
  * Below the slider sits the "receipts" diff row — the three concrete swaps that
  * make the after Canvas-native.
@@ -37,8 +29,23 @@ import styles from './before-after.module.css'
 
 const TIME_OFF_TYPES = ['Vacation', 'Sick', 'Personal', 'Bereavement', 'Jury duty']
 
+// Client-only Canvas Kit "after" screen. Placeholder matches the SSR markup.
+const AfterCanvas = dynamic(() => import('./before-after-canvas'), {
+  ssr: false,
+  loading: () => <TimeOffMock />,
+})
+
 export function BeforeAfter() {
   const reduceMotion = useReducedMotion()
+  const [mounted, setMounted] = useState(false)
+
+  // Intentional one-shot hydration gate: render the client-only Canvas "after"
+  // screen only after mount so SSR markup matches. The set-state-in-effect rule
+  // (new in eslint-config-next 16) flags this deliberate pattern.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true)
+  }, [])
 
   return (
     <Section id="before-after" tone="surface" eyebrow="BEFORE / AFTER">
@@ -66,11 +73,7 @@ export function BeforeAfter() {
         <WipeSlider
           label="Wipe between the generic AI version and the Canvas-native version of the time-off request screen"
           before={<BeforeForm />}
-          after={
-            <CanvasLive>
-              <AfterForm />
-            </CanvasLive>
-          }
+          after={mounted ? <AfterCanvas /> : <TimeOffMock />}
         />
       </div>
 
@@ -94,21 +97,9 @@ export function BeforeAfter() {
 }
 
 const RECEIPTS: { label: string; before: string; after: string }[] = [
-  {
-    label: 'Color',
-    before: '#3b82f6',
-    after: 'cssVar(system.color.bg.primary.default)',
-  },
-  {
-    label: 'Button',
-    before: '<button className="btn">',
-    after: '<PrimaryButton size="medium">',
-  },
-  {
-    label: 'Spacing',
-    before: 'padding: 18px',
-    after: 'system.space.x4 (1rem)',
-  },
+  { label: 'Color', before: '#3b82f6', after: 'cssVar(system.color.bg.primary.default)' },
+  { label: 'Button', before: '<button className="btn">', after: '<PrimaryButton size="medium">' },
+  { label: 'Spacing', before: 'padding: 18px', after: 'system.space.x4 (1rem)' },
 ]
 
 /* ===========================================================================
@@ -118,8 +109,7 @@ const RECEIPTS: { label: string; before: string; after: string }[] = [
    =========================================================================== */
 function BeforeForm() {
   const wrap: React.CSSProperties = {
-    fontFamily:
-      "Inter, -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif",
+    fontFamily: "Inter, -apple-system, 'Segoe UI', Roboto, system-ui, sans-serif",
     background: '#f9fafb',
     color: '#111827',
     height: '100%',
@@ -128,6 +118,7 @@ function BeforeForm() {
     alignItems: 'flex-start',
     justifyContent: 'center',
     overflow: 'auto',
+    boxSizing: 'border-box',
   }
   const cardStyle: React.CSSProperties = {
     width: '100%',
@@ -137,6 +128,7 @@ function BeforeForm() {
     borderRadius: '6px',
     boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
     padding: '18px',
+    boxSizing: 'border-box',
   }
   const labelStyle: React.CSSProperties = {
     display: 'block',
@@ -220,120 +212,6 @@ function BeforeForm() {
           </button>
         </div>
       </div>
-    </div>
-  )
-}
-
-/* ===========================================================================
-   AFTER — the SAME form, REAL Canvas Kit. Rendered inside <CanvasLive> (which
-   supplies <CanvasProvider>, the four token CSS imports, and Roboto). Uses real
-   components, real system tokens, and the system.space rhythm. createStyles is
-   called at module scope (never in render) per Canvas Kit guidance.
-   =========================================================================== */
-const afterStageStyles = createStyles({
-  height: '100%',
-  overflow: 'auto',
-  display: 'flex',
-  alignItems: 'flex-start',
-  justifyContent: 'center',
-  padding: system.space.x8, // 2rem
-  backgroundColor: system.color.bg.alt.softer,
-})
-
-const afterCardStyles = createStyles({
-  width: '100%',
-  maxWidth: '26rem',
-  gap: system.space.x6, // 1.5rem
-})
-
-const afterHeadingRowStyles = createStyles({
-  display: 'flex',
-  alignItems: 'center',
-  gap: system.space.x3, // 0.75rem
-})
-
-const afterFieldsStyles = createStyles({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: system.space.x4, // 1rem rhythm
-})
-
-const afterActionsStyles = createStyles({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  gap: system.space.x4, // 1rem
-  marginBlockStart: system.space.x2, // 0.5rem
-})
-
-function AfterForm() {
-  const [name, setName] = React.useState('')
-
-  return (
-    <div className={afterStageStyles}>
-      <Card cs={afterCardStyles}>
-        <Card.Heading>
-          <span className={afterHeadingRowStyles}>
-            <SystemIcon
-              icon={calendarIcon}
-              size="sm"
-              color={system.color.fg.primary.default}
-            />
-            Request time off
-          </span>
-        </Card.Heading>
-        <Card.Body>
-          <div className={afterFieldsStyles}>
-            <FormField grow>
-              <FormField.Label>Employee name</FormField.Label>
-              <FormField.Field>
-                <FormField.Input
-                  as={TextInput}
-                  value={name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setName(e.target.value)
-                  }
-                  placeholder="Jane Doe"
-                />
-              </FormField.Field>
-            </FormField>
-
-            <FormField grow>
-              <FormField.Label>Type</FormField.Label>
-              <FormField.Field>
-                <Select items={TIME_OFF_TYPES}>
-                  <FormField.Input as={Select.Input} />
-                  <Select.Popper>
-                    <Select.Card>
-                      <Select.List>
-                        {(item: string) => <Select.Item>{item}</Select.Item>}
-                      </Select.List>
-                    </Select.Card>
-                  </Select.Popper>
-                </Select>
-              </FormField.Field>
-            </FormField>
-
-            <FormField grow>
-              <FormField.Label>Start date</FormField.Label>
-              <FormField.Field>
-                <FormField.Input as={TextInput} type="date" />
-              </FormField.Field>
-            </FormField>
-
-            <FormField grow>
-              <FormField.Label>End date</FormField.Label>
-              <FormField.Field>
-                <FormField.Input as={TextInput} type="date" />
-              </FormField.Field>
-            </FormField>
-
-            <div className={afterActionsStyles}>
-              <SecondaryButton size="medium">Cancel</SecondaryButton>
-              <PrimaryButton size="medium">Submit request</PrimaryButton>
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
     </div>
   )
 }

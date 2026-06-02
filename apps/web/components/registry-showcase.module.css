@@ -13,7 +13,12 @@
   font-size: 1.125rem;
   line-height: 1.6;
   color: var(--cm-muted);
-  max-width: 56ch;
+  max-width: 60ch;
+}
+
+.subStrong {
+  color: var(--cm-ink);
+  font-weight: 700;
 }
 
 /* --- Grid: 3-col desktop / 2-col tablet / 1-col mobile --------------------- */
@@ -39,23 +44,29 @@
   }
 }
 
-/* --- Block card ------------------------------------------------------------ */
+.cardItem {
+  display: flex;
+}
+
+/* --- Block card (a button that opens the preview) -------------------------- */
 .card {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  inline-size: 100%;
+  text-align: start;
   padding: 1.125rem 1.25rem;
-  background-color: var(--cm-paper);
+  background-color: var(--cm-surface);
   border: 1px solid var(--cm-line);
-  border-radius: var(--cm-radius-card); /* 12px */
-  /* Hover lift is driven by motion's y; the border-color shift is CSS so it
-     respects the prefers-reduced-motion duration override in globals.css. */
+  border-radius: var(--cm-radius-card);
+  box-shadow: var(--cm-shadow-sm);
+  cursor: pointer;
   transition: border-color 0.2s var(--cm-ease), box-shadow 0.2s var(--cm-ease);
 }
 
 .card:hover {
   border-color: var(--cm-blue);
-  box-shadow: 0 6px 20px rgba(8, 117, 225, 0.08);
+  box-shadow: 0 10px 26px -14px rgba(8, 117, 225, 0.45);
 }
 
 .cardHead {
@@ -65,7 +76,6 @@
   gap: 0.75rem;
 }
 
-/* The mono block name is the card's visual anchor (anti-slop — not an icon). */
 .blockName {
   font-family: var(--cm-font-mono);
   font-size: 0.9375rem;
@@ -80,6 +90,23 @@
   font-size: 0.9375rem;
   line-height: 1.5;
   color: var(--cm-body);
+}
+
+.cardCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--cm-blue);
+  opacity: 0.75;
+  transition: gap 0.2s var(--cm-ease), opacity 0.2s var(--cm-ease);
+}
+
+.card:hover .cardCue {
+  opacity: 1;
+  gap: 0.5rem;
 }
 
 /* --- Category tag (shared color vocabulary with SkillsSection) ------------- */
@@ -97,54 +124,204 @@
   white-space: nowrap;
 }
 
-/* display content — blue family (the core workflow). */
 .blue {
   color: var(--cm-blue-deep);
-  background-color: #eaf3fd; /* blueberry100-adjacent tint */
-  border-color: #cfe5fb;
+  background-color: var(--cm-blue-tint);
+  border-color: color-mix(in srgb, var(--cm-blue) 22%, transparent);
 }
 
-/* forms / structure — neutral (structural). */
 .neutral {
   color: var(--cm-body);
   background-color: var(--cm-paper-2);
   border-color: var(--cm-line);
 }
 
-/* interaction — spark/gold (the lively, eventful blocks earn the warm accent). */
 .spark {
-  color: #8a4b00;
-  background-color: #fff1dc; /* cantaloupe tint */
-  border-color: #ffd9a3;
+  color: #8a3d00;
+  background-color: #ffe9d6;
+  border-color: #ffc7a1;
 }
 
-/* full pages — muted (composed, highest level). */
 .muted {
   color: var(--cm-muted);
-  background-color: rgba(107, 107, 115, 0.08);
-  border-color: rgba(107, 107, 115, 0.18);
+  background-color: rgba(93, 107, 126, 0.1);
+  border-color: rgba(93, 107, 126, 0.2);
 }
 
-/* --- Install panel --------------------------------------------------------- */
-.install {
+/* =============================================================================
+   Preview modal
+   ============================================================================ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  background-color: rgba(6, 27, 64, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: overlay-in 0.2s var(--cm-ease);
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  display: grid;
+  grid-template-columns: 1fr;
+  inline-size: 100%;
+  max-inline-size: 60rem;
+  max-block-size: 88vh;
+  overflow: hidden;
+  background-color: var(--cm-surface);
+  border: 1px solid var(--cm-line);
+  border-radius: var(--cm-radius-card);
+  box-shadow: var(--cm-shadow-lg);
+  animation: modal-in 0.24s var(--cm-ease);
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (min-width: 52rem) {
+  .modal {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.85fr);
+  }
+}
+
+/* --- Preview stage --------------------------------------------------------- */
+.modalStage {
+  display: flex;
+  flex-direction: column;
+  background-color: #eef3fb;
+  min-width: 0;
+}
+
+.stageChrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.875rem;
+  background-color: #f4f7fb;
+  border-bottom: 1px solid var(--cm-line);
+}
+
+.stageDots {
+  display: inline-flex;
+  gap: 0.375rem;
+  flex: 0 0 auto;
+}
+
+.stageDots i {
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: 999px;
+  background-color: #cdd6e3;
+}
+
+.stageUrl {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--cm-font-mono);
+  font-size: 0.75rem;
+  color: var(--cm-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stageUrl code {
+  color: var(--cm-blue-deep);
+  font-weight: 500;
+}
+
+.close {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2rem;
+  block-size: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--cm-line);
+  background-color: #ffffff;
+  color: var(--cm-muted);
+  cursor: pointer;
+  transition: color 0.2s var(--cm-ease), border-color 0.2s var(--cm-ease);
+}
+
+.close:hover {
+  color: var(--cm-ink);
+  border-color: var(--cm-blue);
+}
+
+.stageBody {
+  position: relative;
+  block-size: 25rem;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+/* --- Meta / install -------------------------------------------------------- */
+.modalMeta {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-top: 2rem;
-  max-width: 44rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--cm-line);
+  overflow-y: auto;
 }
 
-.installLabel {
-  font-size: 0.9375rem;
+@media (min-width: 52rem) {
+  .modalMeta {
+    border-top: none;
+    border-inline-start: 1px solid var(--cm-line);
+  }
+}
+
+.metaHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.metaTitle {
+  margin: 0;
+  font-size: 1.0625rem;
+}
+
+.metaTitle code {
+  font-family: var(--cm-font-mono);
   font-weight: 600;
   color: var(--cm-ink);
+}
+
+.metaBody {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--cm-body);
+}
+
+.metaLabel {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cm-muted);
 }
 
 .alt {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: 0.25rem;
 }
 
 .altLabel {
@@ -157,26 +334,30 @@
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  padding: 0.625rem 0.75rem 0.625rem 1rem;
+  padding: 0.625rem 0.625rem 0.625rem 0.875rem;
   background-color: var(--cm-paper-2);
   border: 1px solid var(--cm-line);
-  border-radius: var(--cm-radius-button); /* 8px */
+  border-radius: var(--cm-radius-button);
 }
 
 .altCode {
   flex: 1 1 auto;
   min-width: 0;
   font-family: var(--cm-font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   line-height: 1.5;
   color: var(--cm-body);
-  overflow-x: auto;
-  scrollbar-width: thin;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
-/* The CopyButton sits on the warm panel here — keep it muted to match. */
 .altRow button {
   color: var(--cm-muted);
   flex: 0 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .modal {
+    animation: none;
+  }
 }

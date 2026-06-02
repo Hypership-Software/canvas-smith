@@ -14,16 +14,18 @@ import styles from './final-cta.module.css'
  * on the exact thing we want copied.
  */
 
-const PRIMARY_COMMAND = '/plugin marketplace add canvasmith/canvasmith'
+const PRIMARY_COMMAND = 'npx canvasmith@latest'
 
 export function FinalCTA() {
   return (
     <Section tone="paper2" className={styles.section}>
       <div className={styles.inner}>
-        <h2 className={styles.heading}>Stop shipping UI that looks like AI.</h2>
-        <p className={styles.sub}>
-          Make your agent build like it works at Workday.
-        </p>
+        <div className={styles.text}>
+          <h2 className={styles.heading}>Stop shipping UI that looks like AI.</h2>
+          <p className={styles.sub}>
+            Make your agent build like it works at Workday.
+          </p>
+        </div>
 
         <div className={styles.actions}>
           <Button as="a" href="#install" variant="primary">
@@ -33,11 +35,9 @@ export function FinalCTA() {
           <div className={styles.command}>
             <code className={styles.code}>
               <span className={styles.prompt} aria-hidden="true">
-                /
+                $
               </span>
-              <span className={styles.commandText}>
-                plugin marketplace add canvasmith/canvasmith
-              </span>
+              <span className={styles.commandText}>npx canvasmith@latest</span>
             </code>
             <CopyButton value={PRIMARY_COMMAND} />
           </div>

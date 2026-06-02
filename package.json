@@ -3,10 +3,14 @@
   "private": true,
   "version": "0.1.0",
   "description": "Canvasmith — a Claude Code plugin that makes any AI-generated front-end look and feel Workday-native (via real Workday Canvas Kit references), plus its marketing site. Turborepo monorepo.",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "npm@11.6.2",
   "engines": {
-    "node": ">=18.18.0"
+    "node": ">=20.9.0"
   },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -16,8 +20,8 @@
     "web": "turbo run dev --filter=web"
   },
   "devDependencies": {
-    "prettier": "^3.4.2",
-    "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "prettier": "^3.8.3",
+    "turbo": "^2.9.16",
+    "typescript": "^5.9.3"
   }
 }

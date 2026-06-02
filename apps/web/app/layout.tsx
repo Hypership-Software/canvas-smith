@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Fraunces, Roboto, Roboto_Mono } from 'next/font/google'
+import { Roboto, Roboto_Mono } from 'next/font/google'
 
 import CanvasStyleRegistry from './registry'
 import './globals.css'
@@ -7,33 +7,29 @@ import './globals.css'
 /**
  * RootLayout — Server Component.
  *
- * Loads the brand type pairing via next/font (zero layout shift, self-hosted),
- * exposes them as CSS variables on <html>, exports the site Metadata, and wraps
- * the tree in <CanvasStyleRegistry> so the live Canvas Kit demo's Emotion styles
- * flush correctly during SSR.
+ * Loads the brand type via next/font (zero layout shift, self-hosted), exposes
+ * it as CSS variables on <html>, exports the site Metadata, and wraps the tree
+ * in <CanvasStyleRegistry> so the live Canvas Kit demo's Emotion styles flush
+ * correctly during SSR.
  *
- * Fraunces (display) gives the editorial, "forged" serif headline voice; Roboto
- * (body/UI) is the direct Canvas tie-in; Roboto Mono renders install commands.
+ * The site is intentionally Roboto end-to-end: Roboto is THE Workday Canvas
+ * system typeface, so leading with it — heavy weights for display, regular for
+ * body — is what makes the marketing read as genuinely Workday-native rather
+ * than a generic SaaS site. `--font-body` doubles as the display family (see
+ * `--cm-font-display` in globals.css); Roboto Mono renders install commands.
  */
-
-const display = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-display',
-  weight: ['400', '500', '600'],
-  display: 'swap',
-})
 
 const body = Roboto({
   subsets: ['latin'],
   variable: '--font-body',
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '700', '900'],
   display: 'swap',
 })
 
 const mono = Roboto_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
-  weight: ['400', '500'],
+  weight: ['400', '500', '700'],
   display: 'swap',
 })
 
@@ -82,11 +78,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable}`}
-    >
-      <body>
+    <html lang="en" className={`${body.variable} ${mono.variable}`}>
+      {/*
+        suppressHydrationWarning: browser extensions (ColorZilla's
+        `cz-shortcut-listen`, Grammarly's `data-gr-*`, etc.) inject attributes
+        onto <body> before React hydrates, which otherwise trips a hydration
+        attribute-mismatch warning. This suppresses that one-level body diff only.
+      */}
+      <body suppressHydrationWarning>
         <CanvasStyleRegistry>{children}</CanvasStyleRegistry>
       </body>
     </html>

@@ -1,5 +1,5 @@
 .section {
-  padding-block: var(--cm-section-pad); /* clamp(4rem, 10vw, 8rem) */
+  padding-block: var(--cm-section-pad); /* clamp(4.5rem, 10vw, 8.5rem) */
 }
 
 /* --- Tones ----------------------------------------------------------------- */
@@ -8,9 +8,11 @@
   color: var(--cm-body);
 }
 
+/* Soft daylight-blue panel band — the gentle Workday tint between white bands. */
 .paper2 {
   background-color: var(--cm-paper-2);
   color: var(--cm-body);
+  border-block: 1px solid var(--cm-line-soft);
 }
 
 .surface {
@@ -18,9 +20,25 @@
   color: var(--cm-body);
 }
 
+/* Deep Workday-blue "brand" band with a daylight gradient + a sunrise glow in
+   the top-right — the corporate-brand register. */
 .night {
-  background-color: var(--cm-night);
+  position: relative;
+  isolation: isolate;
   color: rgba(255, 255, 255, 0.82);
+  background-color: var(--cm-night);
+  background-image:
+    radial-gradient(
+      90% 120% at 92% -10%,
+      rgba(252, 91, 5, 0.32) 0%,
+      rgba(252, 91, 5, 0) 50%
+    ),
+    radial-gradient(
+      80% 120% at 6% 0%,
+      rgba(90, 169, 255, 0.28) 0%,
+      rgba(90, 169, 255, 0) 55%
+    ),
+    linear-gradient(168deg, #0a3a78 0%, #062a5e 58%, #041f48 100%);
 }
 
 /* On dark bands, force display headings to pure-ish white for contrast. */

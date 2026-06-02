@@ -5,46 +5,62 @@
   gap: 0.5rem;
   font-family: var(--cm-font-body);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1;
+  letter-spacing: -0.01em;
   text-align: center;
   white-space: nowrap;
-  border-radius: var(--cm-radius-button); /* 8px */
-  padding: 0.8125rem 1.375rem;
+  /* Workday-marketing pill CTA. */
+  border-radius: var(--cm-radius-pill);
+  padding: 0.875rem 1.625rem;
   cursor: pointer;
   user-select: none;
   transition:
     background-color 0.2s var(--cm-ease),
     border-color 0.2s var(--cm-ease),
     color 0.2s var(--cm-ease),
-    transform 0.2s var(--cm-ease);
+    box-shadow 0.2s var(--cm-ease),
+    transform 0.15s var(--cm-ease);
 }
 
 .button:active {
-  transform: translateY(1px);
+  transform: translateY(0);
 }
 
-/* --- Primary: brand-blue solid -------------------------------------------- */
+/* --- Primary: solid blueberry, the way Workday ships a CTA ----------------- */
 .primary {
   background-color: var(--cm-blue);
   color: #ffffff;
   border: 1px solid transparent;
+  box-shadow: 0 1px 1px rgba(6, 27, 64, 0.16);
 }
 
 .primary:hover {
   background-color: var(--cm-blue-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -10px rgba(8, 117, 225, 0.7);
 }
 
-/* --- Ghost: transparent, bordered, underline on hover --------------------- */
+.primary:active {
+  background-color: var(--cm-blue-press);
+  transform: translateY(0);
+  box-shadow: 0 1px 1px rgba(6, 27, 64, 0.16);
+}
+
+/* --- Ghost / secondary: Canvas SecondaryButton — bordered, tint on hover --- */
 .ghost {
-  background-color: transparent;
+  background-color: var(--cm-surface);
   color: var(--cm-blue-deep);
   border: 1px solid var(--cm-line);
 }
 
 .ghost:hover {
   border-color: var(--cm-blue);
-  color: var(--cm-blue);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--cm-blue-deep);
+  background-color: var(--cm-blue-tint);
+  transform: translateY(-1px);
+}
+
+.ghost:active {
+  transform: translateY(0);
 }

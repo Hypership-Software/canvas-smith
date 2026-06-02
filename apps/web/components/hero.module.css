@@ -2,61 +2,37 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  color: rgba(255, 255, 255, 0.84);
   background-color: var(--cm-night);
-  color: rgba(255, 255, 255, 0.82);
-  /* Clear the fixed 4rem nav, then breathe. */
-  padding-block: clamp(7rem, 12vw, 10rem) clamp(4rem, 9vw, 7rem);
-}
-
-/* --- Faint blueprint-grid texture (engineered cue, very low opacity) ------- */
-.grid {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
+  /* Workday daylight: a deep-blue field brightened toward the top-left. The
+     animated sunrise "Background Paths" layer sits on top of this gradient. */
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  /* Fade the grid out toward the edges so it reads as texture, not a table. */
-  -webkit-mask-image: radial-gradient(120% 90% at 30% 10%, #000 35%, transparent 78%);
-  mask-image: radial-gradient(120% 90% at 30% 10%, #000 35%, transparent 78%);
-}
-
-/* --- The single warm spark glow (anti-slop: exactly one) ------------------- */
-.glow {
-  position: absolute;
-  z-index: -1;
-  inset-block-start: -14%;
-  inset-inline-end: -8%;
-  inline-size: 46rem;
-  block-size: 46rem;
-  background: radial-gradient(
-    circle at center,
-    color-mix(in srgb, var(--cm-spark) 26%, transparent) 0%,
-    transparent 62%
-  );
-  filter: blur(8px);
-  pointer-events: none;
+    radial-gradient(78% 90% at 4% -6%, rgba(90, 169, 255, 0.3) 0%, rgba(90, 169, 255, 0) 52%),
+    linear-gradient(165deg, #0c3f82 0%, #072c63 52%, #041f48 100%);
+  /* Clear the fixed 4rem nav, then breathe. */
+  padding-block: clamp(7.5rem, 13vw, 11rem) clamp(4.5rem, 9vw, 7.5rem);
 }
 
 /* --- Two-column layout ----------------------------------------------------- */
 .inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   align-items: center;
   gap: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .copy {
-  max-width: 36rem;
+  max-width: 37rem;
 }
 
 .title {
-  margin-block: 1.25rem 0;
+  margin-block: 1.5rem 0;
   color: #ffffff;
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
+  font-family: var(--cm-font-display);
+  font-weight: 900;
+  font-size: clamp(2.9rem, 6.2vw, 4.85rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
@@ -65,41 +41,63 @@
   will-change: transform, opacity;
 }
 
+/* The brand word ("Workday") gets a sunrise underline swash — the Koto cue. */
+.title .word:nth-child(5) {
+  position: relative;
+  color: #ffffff;
+}
+
+.title .word:nth-child(5)::after {
+  content: "";
+  position: absolute;
+  inset-inline: -0.04em;
+  inset-block-end: -0.04em;
+  block-size: 0.14em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cm-spark) 0%, var(--cm-gold) 100%);
+  box-shadow: 0 0 18px -2px rgba(252, 91, 5, 0.55);
+}
+
 .sub {
   margin-block-start: 1.5rem;
   max-width: 34rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.74);
 }
 
-/* --- Install block (the prominent element) --------------------------------- */
+/* --- Install one-liner ----------------------------------------------------- */
 .install {
-  margin-block-start: 2rem;
+  margin-block-start: 2.25rem;
+  max-width: 33rem;
 }
 
 .installLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--cm-font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cm-blue-bright);
   margin: 0 0 0.75rem;
 }
 
-.commands {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  max-width: 32rem;
+.installLabel::before {
+  content: "";
+  inline-size: 1.5rem;
+  block-size: 2px;
+  border-radius: 2px;
+  background-color: currentColor;
 }
 
 .helper {
   margin-block-start: 0.75rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.56);
 }
 
 /* --- CTAs ------------------------------------------------------------------ */
@@ -111,244 +109,22 @@
   margin-block-start: 2rem;
 }
 
-/* The ghost Button is tuned for light bands; recolor it for the night band. */
+/* The ghost Button is tuned for light bands; recolor it for the blue band. */
 .ghostOnDark {
-  color: rgba(255, 255, 255, 0.88);
+  color: #ffffff;
   border-color: var(--cm-night-line);
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .ghostOnDark:hover {
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.45);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: var(--cm-spark);
+  border-color: rgba(255, 255, 255, 0.55);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* --- Product mock (browser chrome + Canvas-native screen) ------------------ */
+/* --- Visual ---------------------------------------------------------------- */
 .visual {
   min-width: 0;
-}
-
-.frame {
-  border-radius: var(--cm-radius-card);
-  background-color: var(--cm-night-2);
-  border: 1px solid var(--cm-night-line);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 30px 60px -24px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
-}
-
-.chrome {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 0.875rem;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid var(--cm-night-line);
-}
-
-.dots {
-  display: inline-flex;
-  gap: 0.375rem;
-  flex: 0 0 auto;
-}
-
-.dotRed,
-.dotAmber,
-.dotGreen {
-  inline-size: 10px;
-  block-size: 10px;
-  border-radius: 999px;
-}
-
-.dotRed {
-  background-color: #ff5f57;
-}
-
-.dotAmber {
-  background-color: #febc2e;
-}
-
-.dotGreen {
-  background-color: #28c840;
-}
-
-.urlbar {
-  flex: 1 1 auto;
-  min-width: 0;
-  font-family: var(--cm-font-mono);
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
-  padding: 0.3125rem 0.625rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.builtTag {
-  flex: 0 0 auto;
-  font-family: var(--cm-font-body);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--cm-blue-bright);
-  border: 1px solid color-mix(in srgb, var(--cm-blue-bright) 40%, transparent);
-  border-radius: var(--cm-radius-pill);
-  padding: 0.1875rem 0.5rem;
-}
-
-/* The "screen" is a light Canvas-native surface inside the dark frame. */
-.screen {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem;
-  background-color: #ffffff;
-  color: var(--cm-body);
-}
-
-.appHead {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e8eaed; /* Canvas soap300 */
-}
-
-.appAvatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  inline-size: 2.25rem;
-  block-size: 2.25rem;
-  border-radius: 999px;
-  background-color: var(--cm-blue);
-  color: #ffffff;
-  font-family: var(--cm-font-body);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  flex: 0 0 auto;
-}
-
-.appHeadText {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-  min-width: 0;
-}
-
-.appTitle {
-  font-family: var(--cm-font-body);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: #1a1a22;
-}
-
-.appCrumb {
-  font-family: var(--cm-font-body);
-  font-size: 0.75rem;
-  color: var(--cm-muted);
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-.fieldRow {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.label {
-  font-family: var(--cm-font-body);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #494949; /* blackPepper300 */
-}
-
-.inputMock,
-.selectMock {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  block-size: 2.5rem;
-  padding-inline: 0.75rem;
-  border: 1px solid #ced3d9; /* Canvas soap400 */
-  border-radius: 4px; /* Canvas radius m */
-  font-family: var(--cm-font-body);
-  font-size: 0.875rem;
-  color: #1a1a22;
-  background-color: #ffffff;
-}
-
-.caret {
-  inline-size: 0;
-  block-size: 0;
-  border-inline: 4px solid transparent;
-  border-block-start: 5px solid var(--cm-muted);
-}
-
-.balance {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 0.875rem;
-  border-radius: 8px; /* Canvas radius l */
-  background-color: #f4f5f6; /* Canvas soap200 */
-  border: 1px solid #e8eaed;
-}
-
-.balanceLabel {
-  font-family: var(--cm-font-body);
-  font-size: 0.8125rem;
-  color: #494949;
-}
-
-.balanceValue {
-  font-family: var(--cm-font-body);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--cm-blue-deep);
-}
-
-.appActions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.625rem;
-  padding-top: 0.25rem;
-}
-
-.btnGhost,
-.btnPrimary {
-  display: inline-flex;
-  align-items: center;
-  block-size: 2.5rem;
-  padding-inline: 1.125rem;
-  border-radius: 8px;
-  font-family: var(--cm-font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.btnGhost {
-  color: var(--cm-blue-deep);
-  border: 1px solid #ced3d9;
-  background-color: #ffffff;
-}
-
-.btnPrimary {
-  color: #ffffff;
-  background-color: var(--cm-blue);
-  border: 1px solid var(--cm-blue);
 }
 
 /* --- Responsive ------------------------------------------------------------ */
@@ -364,7 +140,7 @@
 
   .visual {
     order: 2;
-    max-width: 30rem;
+    max-width: 32rem;
   }
 }
 

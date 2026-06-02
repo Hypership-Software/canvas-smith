@@ -8,57 +8,79 @@
 
    Emotion / Canvas Kit styling is reserved EXCLUSIVELY for the live Canvas Kit
    demo (components/canvas/canvas-live.tsx). Nothing else on the marketing site
-   may import Emotion or Canvas Kit — the brand layer is intentionally decoupled
-   from the product layer so the landing page reads as its own warm, editorial
-   brand, while the demo proves the real packages work.
+   may import Emotion or Canvas Kit — the brand layer is decoupled from the
+   product layer so the live demo proves the real packages work.
 
-   Token contract for stage-2 components:
+   BRAND DIRECTION — "looks like Workday built it":
+   The site speaks Workday's two-register visual language at once.
+   • Marketing chrome follows Workday's corporate (Koto) brand: deep Workday
+     blue (#0057ae), the warm "sunrise" orange accent (#fc5b05), soft daylight
+     gradients, generous space, and confident heavy-weight Roboto headlines.
+   • Product surfaces (the hero mock, the live before/after) follow the Canvas
+     product system: blueberry (#0875e1), cool soap neutrals, the signature
+     double focus ring, and Roboto — so they read as real Workday product UI.
+   Together they sell the pitch: our marketing looks like Workday's, and the UI
+   our plugin ships looks like Workday's product.
+
+   Token contract:
    - Brand / color / neutral / state tokens live under `:root` as `--cm-*`.
-   - Font families are wired to the `next/font` CSS variables exported from
-     app/layout.tsx (`--font-display`, `--font-body`, `--font-mono`).
+   - Font families are wired to the `next/font` CSS variables from app/layout.tsx
+     (`--font-body`, `--font-mono`). Display reuses the Roboto body variable.
    - Consume tokens directly in *.module.css, e.g. `color: var(--cm-body)`.
    ============================================================================ */
 
 :root {
-  /* --- Brand ------------------------------------------------------------- */
-  --cm-blue: #0875e1; /* Canvas blueberry400 — trust anchor, primary CTA, links, focus */
-  --cm-blue-deep: #004387; /* blueberry600 — CTA hover/pressed, deep accents */
-  --cm-blue-bright: #40a0ff; /* blueberry300 — glow/highlight on dark, code tokens */
-  --cm-spark: #ffa126; /* cantaloupe400 — the "forge spark" warm accent */
-  --cm-gold: #ffc629; /* sourLemon400 — signature Canvas gold */
+  /* --- Brand: blue ------------------------------------------------------- */
+  --cm-blue: #0875e1; /* Canvas blueberry400 — links, interactive, primary CTA */
+  --cm-blue-deep: #0057ae; /* Workday corporate blue — deep brand anchor, hover */
+  --cm-blue-press: #00417f; /* pressed / deepest */
+  --cm-blue-bright: #5aa9ff; /* highlight + code tokens on dark blue bands */
+  --cm-blue-tint: #e7f1fd; /* blueberry100-ish — soft fill behind blue content */
 
-  /* --- Warm neutral foundation (editorial warmth, never cold grey) ------- */
-  --cm-ink: #1a1a22; /* primary heading text, near-black with a cool-warm bias */
-  --cm-body: #333333; /* blackPepper400 — body copy */
-  --cm-muted: #6b6b73; /* captions, secondary text */
-  --cm-paper: #fbfaf7; /* warm off-white page background — the signature */
-  --cm-paper-2: #f4f2ec; /* warm panel background */
+  /* --- Brand: sunrise (the Koto warm accent) ----------------------------- */
+  --cm-spark: #fc5b05; /* Workday sunrise orange — the signature warm accent */
+  --cm-spark-soft: #ff8a4c; /* lighter sunrise for glows / gradients */
+  --cm-gold: #ffc629; /* sourLemon400 — secondary warm highlight */
+
+  /* --- Ink + cool neutral foundation (tinted toward the brand blue) ------ */
+  --cm-ink: #0c2244; /* deep Workday navy — headings */
+  --cm-body: #354254; /* cool slate — body copy */
+  --cm-muted: #5d6b7e; /* captions, secondary text */
+  --cm-paper: #ffffff; /* page background — clean white */
+  --cm-paper-2: #eef4fb; /* soft daylight-blue panel band */
   --cm-surface: #ffffff; /* card / surface */
-  --cm-line: #e7e3da; /* warm hairline borders */
+  --cm-line: #dbe3ee; /* cool soap hairline borders */
+  --cm-line-soft: #e9eef6; /* faintest divider */
 
-  /* --- Dark "night" bands (hero / footer / code) ------------------------- */
-  --cm-night: #0b1020; /* deep navy-ink, premium — NOT pure black */
-  --cm-night-2: #121a30; /* raised panel on night */
-  --cm-night-line: rgba(255, 255, 255, 0.1); /* hairline on night */
+  /* --- Deep Workday-blue "brand" bands (hero / install / footer) --------- */
+  --cm-night: #062a5e; /* deep Workday blue band — NOT generic navy/black */
+  --cm-night-2: #0b3a78; /* raised panel on a blue band */
+  --cm-night-line: rgba(255, 255, 255, 0.16); /* hairline on blue bands */
+  --cm-terminal: #08213f; /* command-block surface — crisp deep-navy terminal */
 
   /* --- States ------------------------------------------------------------ */
-  --cm-success: #43c463; /* greenApple400 — installed / done state */
-  --cm-focus: #0875e1; /* focus ring = brand blue */
+  --cm-success: #1a8a4f; /* greenApple — installed / done state */
+  --cm-focus: #0875e1; /* focus ring outer = blueberry400 (Canvas signature) */
 
-  /* --- Type families (wired to next/font variables) ---------------------- */
-  --cm-font-display: var(--font-display), "Fraunces", Georgia, "Times New Roman", serif;
+  /* --- Type families (Roboto end-to-end; display = heavy Roboto) --------- */
+  --cm-font-display: var(--font-body), "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --cm-font-body: var(--font-body), "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --cm-font-mono: var(--font-mono), "Roboto Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
   /* --- Layout primitives ------------------------------------------------- */
-  --cm-container: 1120px;
+  --cm-container: 1180px;
   --cm-container-pad: clamp(1rem, 5vw, 2.5rem);
-  --cm-section-pad: clamp(4rem, 10vw, 8rem);
+  --cm-section-pad: clamp(4.5rem, 10vw, 8.5rem);
 
-  /* --- Radius (slightly softer/premium vs. the product) ------------------ */
-  --cm-radius-button: 8px;
-  --cm-radius-card: 12px;
+  /* --- Radius (Canvas-soft; pill CTAs the way Workday marketing does) ----- */
+  --cm-radius-button: 10px;
+  --cm-radius-card: 16px;
   --cm-radius-pill: 999px;
+
+  /* --- Elevation (soft, cool-tinted Canvas depth) ------------------------ */
+  --cm-shadow-sm: 0 1px 2px rgba(12, 34, 68, 0.06), 0 1px 3px rgba(12, 34, 68, 0.05);
+  --cm-shadow-md: 0 6px 16px -6px rgba(12, 34, 68, 0.12), 0 2px 6px rgba(12, 34, 68, 0.06);
+  --cm-shadow-lg: 0 28px 60px -28px rgba(6, 27, 64, 0.45), 0 10px 24px -16px rgba(6, 27, 64, 0.3);
 
   /* --- Motion (mirror lib/motion.ts for CSS-only transitions) ------------ */
   --cm-ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -150,16 +172,17 @@ a {
 }
 
 /* =============================================================================
-   Base typography — Roboto body on warm paper, Fraunces for display headings
+   Base typography — Roboto end-to-end: heavy weights for display headings,
+   regular for body, on clean cool surfaces (the Workday Canvas type voice)
    ============================================================================ */
 h1,
 h2,
 h3 {
   font-family: var(--cm-font-display);
   color: var(--cm-ink);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 h4,
@@ -169,17 +192,19 @@ h6 {
   color: var(--cm-ink);
   font-weight: 700;
   line-height: 1.25;
-  letter-spacing: normal;
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
-  line-height: 1.04;
+  font-size: clamp(2.9rem, 6.2vw, 4.85rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
 }
 
 h2 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.1;
+  font-size: clamp(2.1rem, 4vw, 3.2rem);
+  line-height: 1.06;
 }
 
 h3 {
@@ -187,7 +212,7 @@ h3 {
   line-height: 1.25;
   font-family: var(--cm-font-body);
   font-weight: 700;
-  letter-spacing: normal;
+  letter-spacing: -0.01em;
 }
 
 p {
@@ -208,12 +233,24 @@ pre {
 }
 
 /* =============================================================================
-   Focus — brand-blue 2px ring with 2px offset, only for keyboard users
+   Focus — the SIGNATURE Workday Canvas double ring: a 2px white inner ring then
+   a 2px blueberry outer ring (box-shadow), only for keyboard users. This is the
+   single most recognizable Canvas a11y tell, so the marketing layer wears it too.
    ============================================================================ */
 :focus-visible {
-  outline: 2px solid var(--cm-focus);
+  outline: 2px solid transparent; /* keeps a visible ring under forced-colors */
   outline-offset: 2px;
-  border-radius: 2px;
+  box-shadow:
+    0 0 0 2px var(--cm-surface),
+    0 0 0 4px var(--cm-focus);
+  border-radius: 4px;
+}
+
+/* On the deep-blue brand bands the white inner ring needs the blue as its gap. */
+.on-night :focus-visible {
+  box-shadow:
+    0 0 0 2px var(--cm-night),
+    0 0 0 4px #ffffff;
 }
 
 /* Suppress the legacy outline for mouse users where :focus-visible is honored. */

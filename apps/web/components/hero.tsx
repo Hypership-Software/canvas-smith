@@ -7,19 +7,21 @@ import { Container } from '@/components/ui/container'
 import { Eyebrow } from '@/components/ui/eyebrow'
 import { Button } from '@/components/ui/button'
 import { CommandBlock } from '@/components/command-block'
+import { BackgroundPaths } from '@/components/background-paths'
+import { HeroShowcase } from '@/components/hero-showcase'
 import { ease, fadeUp, springSoft } from '@/lib/motion'
 import styles from './hero.module.css'
 
 /**
  * Hero — R6 §3.2. Client Component (Framer Motion reveal).
  *
- * A dark `--cm-night` band with a faint blueprint-grid texture and one warm
- * `--cm-spark` glow (the only glow — anti-slop). The H1 reveals word-by-word
- * (fadeUp, 60ms stagger); the framed product panel on the right settles up with
- * a soft spring. All motion is gated behind `prefers-reduced-motion`.
+ * A deep Workday-blue daylight band textured with the animated "Background
+ * Paths" sunrise field (components/background-paths.tsx). The H1 reveals
+ * word-by-word (fadeUp, 60ms stagger); the framed showcase on the right
+ * auto-rotates through three Canvas-native product screens. All motion is gated
+ * behind `prefers-reduced-motion`.
  *
- * The install block is the prominent element: two real CommandBlocks carrying
- * the exact plugin-marketplace + install commands.
+ * The install affordance is a single, copyable one-line `npx` command.
  */
 
 const H1_WORDS = ['Make', 'it', 'look', 'like', 'Workday', 'built', 'it.'] as const
@@ -41,9 +43,8 @@ export function Hero() {
   } as const
 
   return (
-    <section id="top" className={styles.hero}>
-      <div className={styles.grid} aria-hidden="true" />
-      <div className={styles.glow} aria-hidden="true" />
+    <section id="top" className={`${styles.hero} on-night`}>
+      <BackgroundPaths />
 
       <Container className={styles.inner}>
         <div className={styles.copy}>
@@ -85,21 +86,10 @@ export function Hero() {
             transition={{ delay: reduceMotion ? 0 : 0.62 }}
           >
             <p className={styles.installLabel}>Add it in one line</p>
-            <div className={styles.commands}>
-              <CommandBlock
-                command="/plugin marketplace add canvasmith/canvasmith"
-                variant="primary"
-                prompt="/"
-              />
-              <CommandBlock
-                command="/plugin install canvasmith@canvasmith"
-                variant="muted"
-                prompt="/"
-              />
-            </div>
+            <CommandBlock command="npx canvasmith@latest" variant="primary" prompt="$" />
             <p className={styles.helper}>
-              Works in Claude Code. Requires the Canvas Kit packages in your
-              project (we&apos;ll add them).
+              Detects your framework and wires in the pinned Canvas Kit packages
+              automatically.
             </p>
           </motion.div>
 
@@ -125,69 +115,9 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={reduceMotion ? { duration: 0 } : { ...springSoft, delay: 0.3 }}
         >
-          <ProductMock />
+          <HeroShowcase />
         </motion.div>
       </Container>
     </section>
-  )
-}
-
-/**
- * A static, on-brand "after" stand-in: a browser-chrome frame wrapping a
- * Canvas-native worker time-off request screen rendered as plain markup. It is
- * decorative (aria-hidden) — the live, interactive proof lives in BeforeAfter.
- */
-function ProductMock() {
-  return (
-    <div className={styles.frame} aria-hidden="true">
-      <div className={styles.chrome}>
-        <span className={styles.dots}>
-          <span className={styles.dotRed} />
-          <span className={styles.dotAmber} />
-          <span className={styles.dotGreen} />
-        </span>
-        <span className={styles.urlbar}>app.workday.example / time-off</span>
-        <span className={styles.builtTag}>Built with Canvas Kit</span>
-      </div>
-
-      <div className={styles.screen}>
-        <div className={styles.appHead}>
-          <span className={styles.appAvatar}>AR</span>
-          <div className={styles.appHeadText}>
-            <span className={styles.appTitle}>Request Time Off</span>
-            <span className={styles.appCrumb}>Absence · Worker</span>
-          </div>
-        </div>
-
-        <div className={styles.field}>
-          <span className={styles.label}>Type</span>
-          <span className={styles.selectMock}>
-            Vacation
-            <span className={styles.caret} />
-          </span>
-        </div>
-
-        <div className={styles.fieldRow}>
-          <div className={styles.field}>
-            <span className={styles.label}>From</span>
-            <span className={styles.inputMock}>Jun 8, 2026</span>
-          </div>
-          <div className={styles.field}>
-            <span className={styles.label}>To</span>
-            <span className={styles.inputMock}>Jun 12, 2026</span>
-          </div>
-        </div>
-
-        <div className={styles.balance}>
-          <span className={styles.balanceLabel}>Available balance</span>
-          <span className={styles.balanceValue}>14.0 days</span>
-        </div>
-
-        <div className={styles.appActions}>
-          <span className={styles.btnGhost}>Cancel</span>
-          <span className={styles.btnPrimary}>Submit request</span>
-        </div>
-      </div>
-    </div>
   )
 }

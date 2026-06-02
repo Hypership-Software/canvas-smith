@@ -1,11 +1,24 @@
 .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
   font-family: var(--cm-font-body);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   margin: 0;
+}
+
+/* A short leading bar — the consistent Workday brand tick before each label. */
+.eyebrow::before {
+  content: "";
+  inline-size: 1.5rem;
+  block-size: 2px;
+  border-radius: 2px;
+  background-color: currentColor;
+  flex: 0 0 auto;
 }
 
 .default {

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { useReducedMotion } from 'motion/react'
 
 import { Section } from '@/components/ui/section'
+import { Eyebrow } from '@/components/ui/eyebrow'
 import { ease } from '@/lib/motion'
 import styles from './faq-section.module.css'
 
@@ -78,10 +79,18 @@ export function FAQSection() {
   const baseId = useId()
 
   return (
-    <Section id="faq" tone="paper" eyebrow="FAQ">
-      <h2 className={styles.heading}>Questions, answered.</h2>
+    <Section id="faq" tone="paper">
+      <div className={styles.layout}>
+        <div className={styles.intro}>
+          <Eyebrow>FAQ</Eyebrow>
+          <h2 className={styles.heading}>Questions, answered.</h2>
+          <p className={styles.introSub}>
+            Everything about what Canvasmith changes, what it needs, and how it
+            stays Workday-native.
+          </p>
+        </div>
 
-      <ul role="list" className={styles.list}>
+        <ul role="list" className={styles.list}>
         {FAQ_ITEMS.map((item, index) => {
           const isOpen = openIndex === index
           const buttonId = `${baseId}-faq-button-${index}`
@@ -128,7 +137,8 @@ export function FAQSection() {
             </li>
           )
         })}
-      </ul>
+        </ul>
+      </div>
 
       <script
         type="application/ld+json"

@@ -3,22 +3,24 @@
   align-items: center;
   gap: 1rem;
   width: 100%;
-  border-radius: var(--cm-radius-button); /* 8px */
+  border-radius: var(--cm-radius-button);
   padding: 0.875rem 0.875rem 0.875rem 1.125rem;
-  background-color: var(--cm-night-2);
-  border: 1px solid var(--cm-night-line);
+  /* A crisp deep-navy terminal that reads on blue bands AND white sections. */
+  background-color: var(--cm-terminal);
+  border: 1px solid rgba(90, 169, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* Primary — brand-blue left accent for the lead command. */
+/* Primary — bright-blue left accent for the lead command. */
 .primary {
-  border-left: 3px solid var(--cm-blue);
+  border-left: 3px solid var(--cm-blue-bright);
 }
 
-/* Muted — quieter, no accent, lower-contrast surface. */
+/* Muted — quieter, lower-contrast surface. */
 .muted {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: var(--cm-night-line);
-  border-left: 3px solid var(--cm-night-line);
+  background-color: #0c2a4c;
+  border-color: rgba(90, 169, 255, 0.12);
+  border-left: 3px solid rgba(90, 169, 255, 0.2);
 }
 
 .code {
@@ -31,8 +33,8 @@
   font-size: 0.9375rem;
   line-height: 1.6;
   color: #ffffff;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  /* Wrap long commands instead of introducing a horizontal scrollbar. */
+  overflow: hidden;
 }
 
 .prompt {
@@ -47,7 +49,9 @@
 }
 
 .command {
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .action {

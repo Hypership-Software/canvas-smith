@@ -1,0 +1,29 @@
+.root {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* Two tinted, mirrored layers — sunrise orange over a warmer gold underlay. */
+.sunrise {
+  position: absolute;
+  inset: 0;
+  color: var(--cm-spark);
+  opacity: 0.7;
+}
+
+.gold {
+  position: absolute;
+  inset: 0;
+  color: var(--cm-spark-soft);
+  opacity: 0.45;
+}
