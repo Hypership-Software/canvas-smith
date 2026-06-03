@@ -32,7 +32,7 @@ interface Step {
 const STEPS: Step[] = [
   {
     title: 'Add the marketplace.',
-    command: '/plugin marketplace add canvasmith/canvasmith',
+    command: '/plugin marketplace add Hypership-Software/canvas-smith',
     prompt: '/',
     variant: 'primary',
   },
@@ -112,7 +112,7 @@ export function InstallSection() {
         <Button
           variant="ghost"
           as="a"
-          href="https://github.com/canvasmith/canvasmith"
+          href="https://github.com/Hypership-Software/canvas-smith"
           className={styles.docsButton}
         >
           Read the docs

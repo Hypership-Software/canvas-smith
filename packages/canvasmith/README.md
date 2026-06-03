@@ -9,7 +9,7 @@
 In Claude Code, run:
 
 ```text
-/plugin marketplace add canvasmith/canvasmith
+/plugin marketplace add Hypership-Software/canvas-smith
 /plugin install canvasmith@canvasmith
 ```
 

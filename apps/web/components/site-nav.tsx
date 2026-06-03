@@ -25,7 +25,7 @@ const LINKS = [
   { label: 'FAQ', href: '#faq' },
 ] as const
 
-const REPO_URL = 'https://github.com/canvasmith/canvasmith'
+const REPO_URL = 'https://github.com/Hypership-Software/canvas-smith'
 
 export function SiteNav() {
   const [scrolled, setScrolled] = useState(false)

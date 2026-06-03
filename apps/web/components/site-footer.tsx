@@ -11,7 +11,7 @@ import styles from './site-footer.module.css'
  * GitHub + X social icons. Links use in-page #anchors where no page exists yet.
  */
 
-const REPO_URL = 'https://github.com/canvasmith/canvasmith'
+const REPO_URL = 'https://github.com/Hypership-Software/canvas-smith'
 const X_URL = 'https://x.com/canvasmith'
 
 interface FooterLink {

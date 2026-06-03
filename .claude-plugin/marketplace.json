@@ -20,7 +20,7 @@
       "source": "./packages/canvasmith",
       "category": "design",
       "homepage": "https://canvasmith.dev",
-      "repository": "https://github.com/canvasmith/canvasmith",
+      "repository": "https://github.com/Hypership-Software/canvas-smith",
       "license": "MIT",
       "tags": ["design", "workday", "canvas", "ui", "enterprise", "design-system", "skills"]
     }

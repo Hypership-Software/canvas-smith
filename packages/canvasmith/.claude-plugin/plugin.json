@@ -7,7 +7,7 @@
     "email": "kyle@hypership.tech"
   },
   "homepage": "https://canvasmith.dev",
-  "repository": "https://github.com/canvasmith/canvasmith",
+  "repository": "https://github.com/Hypership-Software/canvas-smith",
   "license": "MIT",
   "keywords": ["workday", "canvas-kit", "design-system", "frontend", "ui", "enterprise"],
   "skills": "./.claude/skills"

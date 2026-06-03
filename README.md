@@ -13,7 +13,7 @@ This repository is a [Turborepo](https://turbo.build/repo) monorepo containing t
 ## Install (in Claude Code)
 
 ```text
-/plugin marketplace add canvasmith/canvasmith
+/plugin marketplace add Hypership-Software/canvas-smith
 /plugin install canvasmith@canvasmith
 ```
 
