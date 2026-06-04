@@ -116,6 +116,7 @@ Real Canvas Kit + token-correct + a11y-complete. Full catalog (commands, URLs, p
 - Respect `components.json` aliases; honor the `target` for page/file items.
 - Preserve `'use client'`; rewrite `@/registry/canvasmith/...` imports to where deps actually landed.
 - Print the item `docs` and the exported Props interface so the user can wire it in.
+- Before installing a full-page block (`dashboard`, `list-detail`), check whether the root layout already mounts `<AppShell>` (look in `app/providers.tsx`, `pages/_app.tsx`, `src/main.tsx`, or `src/index.tsx`). If it does, the page block emits its body **without** rendering `<AppShell>` itself — keep `app-shell` in the block's `registryDependencies` so the component file still installs for the layout to import.
 
 **DON'T**
 - Don't require Tailwind — the PRIMARY flow copies files + installs deps with no `components.json`.
