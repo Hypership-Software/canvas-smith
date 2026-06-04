@@ -152,6 +152,8 @@ Common mappings (full table in `../canvas-ui/reference/tokens.md`):
 - DO use **logical properties** in surviving styles (`paddingInline`, `marginBlockStart`) for RTL.
 - DO use the `Text`/`Heading`/`BodyText` components instead of raw font-size/weight on `<h*>`/`<p>`.
 - DO convert incrementally and re-verify the inventory after each cluster.
+- If the file being converted is a top-level page or screen (a default export from a route file, or a component with full-viewport layout), check whether the root layout already mounts `<AppShell>`. If yes: emit only the page body. If no: tell the user to run `/canvasmith:init` first; never invent a shell from raw markup.
+- For sub-components and primitives, never introduce `<AppShell>` — keep them shell-agnostic.
 - DON'T leave raw hex/rgb/px or utility classes once their intent is reproduced with tokens/components.
 - DON'T hand-roll `:focus`/`outline: none` — let the Canvas component's `:focus-visible` ring stand.
 - DON'T change logic, data fetching, routing, or state shape — this is presentation-only.
