@@ -6,6 +6,14 @@ license: MIT
 
 You are building UI that must be indistinguishable from a real Workday product. Generic, framework-default, or "AI-slop" front-ends are a defect here — Workday users expect Canvas. This skill makes any React/Next.js UI **Workday-native** by grounding it in **real Canvas Kit**: real components, real Canvas Design Tokens, real stencils, real Roboto, real focus and a11y behavior. Never approximate Canvas — use it.
 
+## Mandatory chrome — every page renders inside <AppShell>
+
+Every full-page view this skill produces MUST render inside `<AppShell>` (Workday product chrome at `components/canvasmith/app-shell`). The default `/canvasmith:init` flow mounts this shell in the root provider, so most pages render their own body **without** their own `<AppShell>` wrap — the layout provides it.
+
+- If the project has `<AppShell>` in `app/providers.tsx`, `pages/_app.tsx`, `src/main.tsx`, or `src/index.tsx`: emit the page body only. Never render a nested `<AppShell>`.
+- If the project does **not** mount `<AppShell>` anywhere: treat that as a setup error. Tell the user to run `/canvasmith:init` (which scaffolds the shell) before producing the page. Do not invent your own shell.
+- Leaf components and primitives are shell-agnostic — never include `<AppShell>` in their output.
+
 ## What "Workday-native" means
 
 A Workday-native UI is built from the **actual Workday Canvas system**, not a look-alike:
