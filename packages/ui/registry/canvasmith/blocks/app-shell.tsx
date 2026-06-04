@@ -4,7 +4,6 @@ import * as React from 'react';
 import {SystemIcon} from '@workday/canvas-kit-react/icon';
 import {Flex, Box} from '@workday/canvas-kit-react/layout';
 import {TertiaryButton} from '@workday/canvas-kit-react/button';
-import {useUniqueId} from '@workday/canvas-kit-react/common';
 import {createStyles, cssVar} from '@workday/canvas-kit-styling';
 import {system} from '@workday/canvas-tokens-web';
 import {notificationsIcon, inboxIcon} from '@workday/canvas-system-icons-web';
@@ -80,7 +79,7 @@ const navItemStyles = createStyles({
   cursor: 'pointer',
   font: 'inherit',
   padding: system.space.x1,
-  '&:hover .cnvs-nav-icon-bg': {
+  '&:hover [data-canvasmith-nav-icon-bg]': {
     backgroundColor: system.color.bg.alt.soft,
   },
   '&:focus-visible': {
@@ -128,6 +127,13 @@ const mainStyles = createStyles({
   backgroundColor: system.color.bg.alt.softer,
 });
 
+const DEFAULT_HEADER_ACTIONS = (
+  <>
+    <TertiaryButton icon={notificationsIcon} aria-label="Notifications" />
+    <TertiaryButton icon={inboxIcon} aria-label="Inbox" />
+  </>
+);
+
 /** A single navigation entry rendered in the fixed icon rail. */
 export interface AppShellNavItem {
   /** Stable identifier used for active comparison and React keys. */
@@ -163,15 +169,15 @@ export interface AppShellProps {
 
 function NavItem({item, isActive}: {item: AppShellNavItem; isActive: boolean}) {
   const iconBgClass = isActive
-    ? `cnvs-nav-icon-bg ${navIconBgStyles} ${navIconBgActiveStyles}`
-    : `cnvs-nav-icon-bg ${navIconBgStyles}`;
+    ? `${navIconBgStyles} ${navIconBgActiveStyles}`
+    : navIconBgStyles;
   const labelClass = isActive
     ? `${navLabelStyles} ${navLabelActiveStyles}`
     : navLabelStyles;
 
   const inner = (
     <>
-      <span className={iconBgClass}>
+      <span data-canvasmith-nav-icon-bg className={iconBgClass}>
         <SystemIcon
           icon={item.icon}
           size="sm"
@@ -225,20 +231,12 @@ export const AppShell = ({
   navAriaLabel = 'Main navigation',
   children,
 }: AppShellProps) => {
-  const mainId = useUniqueId();
-  const defaultActions = (
-    <>
-      <TertiaryButton icon={notificationsIcon} aria-label="Notifications" />
-      <TertiaryButton icon={inboxIcon} aria-label="Inbox" />
-    </>
-  );
-
   return (
     <Flex cs={shellStyles} flexDirection="column">
       <Flex as="header" cs={headerStyles}>
         <Flex cs={brandStyles}>{brand}</Flex>
         <Flex cs={headerActionsStyles}>
-          {headerActions ?? defaultActions}
+          {headerActions ?? DEFAULT_HEADER_ACTIONS}
           {avatar}
         </Flex>
       </Flex>
@@ -259,7 +257,7 @@ export const AppShell = ({
           ) : null}
         </Flex>
 
-        <Box as="main" id={mainId} cs={mainStyles}>
+        <Box as="main" cs={mainStyles}>
           {children}
         </Box>
       </Flex>
