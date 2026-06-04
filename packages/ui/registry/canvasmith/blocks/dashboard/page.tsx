@@ -2,29 +2,23 @@
 
 import * as React from 'react';
 
-import {Box, Flex, Grid} from '@workday/canvas-kit-react/layout';
-import {Heading} from '@workday/canvas-kit-react/text';
-import {SystemIcon} from '@workday/canvas-kit-react/icon';
+import {Box, Grid} from '@workday/canvas-kit-react/layout';
 import {PrimaryButton, SecondaryButton} from '@workday/canvas-kit-react/button';
 import {StatusIndicator} from '@workday/canvas-kit-preview-react/status-indicator';
-import {createStyles, cssVar} from '@workday/canvas-kit-styling';
+import {createStyles} from '@workday/canvas-kit-styling';
 import {system} from '@workday/canvas-tokens-web';
 import {
   usersIcon,
-  rocketIcon,
   exportIcon,
   plusIcon,
-  homeIcon,
   userIcon,
   clipboardListIcon,
   calendarIcon,
 } from '@workday/canvas-system-icons-web';
 
-import {AppShell, type AppShellNavItem} from '@/registry/canvasmith/blocks/app-shell';
 import {DataTable, type DataTableColumn} from '@/registry/canvasmith/blocks/data-table';
 import {PageHeader} from '@/registry/canvasmith/ui/page-header';
 import {StatCard} from '@/registry/canvasmith/ui/stat-card';
-import {UserMenu} from '@/registry/canvasmith/ui/user-menu';
 
 /**
  * A recent worker-lifecycle activity row surfaced on the dashboard table.
@@ -105,24 +99,6 @@ const ACTIVITY: ActivityRow[] = [
   },
 ];
 
-const NAV_ITEMS: AppShellNavItem[] = [
-  {id: 'home', label: 'Home', icon: homeIcon, href: '#home'},
-  {id: 'people', label: 'People', icon: userIcon, href: '#people'},
-  {id: 'tasks', label: 'Tasks', icon: clipboardListIcon, href: '#tasks'},
-  {id: 'time-off', label: 'Time Off', icon: calendarIcon, href: '#time-off'},
-];
-
-const brandStyles = createStyles({
-  alignItems: 'center',
-  gap: system.space.x2,
-});
-
-const brandTitleStyles = createStyles({
-  margin: 0,
-  whiteSpace: 'nowrap',
-  color: cssVar(system.color.fg.stronger),
-});
-
 const statGrid = createStyles({
   gridTemplateColumns: 'repeat(auto-fit, minmax(15rem, 1fr))',
   gap: system.space.x6,
@@ -134,6 +110,10 @@ const tableSection = createStyles({
   borderRadius: system.shape.x2,
   boxShadow: system.depth[1],
   padding: system.space.x6,
+});
+
+const pageStyles = createStyles({
+  padding: system.space.x8,
 });
 
 const COLUMNS: DataTableColumn<ActivityRow>[] = [
@@ -156,35 +136,15 @@ const COLUMNS: DataTableColumn<ActivityRow>[] = [
 ];
 
 /**
- * Flagship Workday-style operations dashboard: an {@link AppShell} hosting a
- * {@link PageHeader}, a responsive grid of headline {@link StatCard}s, and a
- * {@link DataTable} of recent worker-lifecycle activity. Default-exported as a
- * route entry (`app/dashboard/page.tsx`).
+ * Flagship Workday-style operations dashboard: a {@link PageHeader}, a
+ * responsive grid of headline {@link StatCard}s, and a {@link DataTable} of
+ * recent worker-lifecycle activity. Designed to be rendered inside the root
+ * layout's {@link AppShell} chrome. Default-exported as a route entry
+ * (`app/dashboard/page.tsx`).
  */
 export default function DashboardPage() {
   return (
-    <AppShell
-      brand={
-        <Flex cs={brandStyles}>
-          <SystemIcon icon={rocketIcon} size="md" color={system.color.icon.primary.default} />
-          <Heading as="h1" size="small" cs={brandTitleStyles}>
-            People Hub
-          </Heading>
-        </Flex>
-      }
-      nav={NAV_ITEMS}
-      activeNavId="home"
-      headerActions={
-        <UserMenu
-          name="Helena Voss"
-          email="helena.voss@example.com"
-          items={[
-            {id: 'profile', label: 'View profile', icon: userIcon},
-            {id: 'sign-out', label: 'Sign out', isDestructive: true},
-          ]}
-        />
-      }
-    >
+    <Box cs={pageStyles}>
       <PageHeader
         title="Workforce Overview"
         breadcrumbs={[
@@ -245,6 +205,6 @@ export default function DashboardPage() {
           pageSize={5}
         />
       </Box>
-    </AppShell>
+    </Box>
   );
 }
