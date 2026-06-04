@@ -4,27 +4,20 @@ import * as React from 'react';
 
 import {Avatar} from '@workday/canvas-kit-react/avatar';
 import {Flex, Box} from '@workday/canvas-kit-react/layout';
-import {Heading, BodyText, Subtext} from '@workday/canvas-kit-react/text';
-import {SystemIcon} from '@workday/canvas-kit-react/icon';
+import {BodyText, Subtext} from '@workday/canvas-kit-react/text';
 import {PrimaryButton, SecondaryButton} from '@workday/canvas-kit-react/button';
 import {StatusIndicator} from '@workday/canvas-kit-preview-react/status-indicator';
 import {createStyles, cssVar} from '@workday/canvas-kit-styling';
 import {system} from '@workday/canvas-tokens-web';
 import {
-  homeIcon,
-  userIcon,
-  clipboardListIcon,
-  rocketIcon,
   userPlusIcon,
   editIcon,
   mailIcon,
 } from '@workday/canvas-system-icons-web';
 
-import {AppShell, type AppShellNavItem} from '@/registry/canvasmith/blocks/app-shell';
 import {DataTable, type DataTableColumn} from '@/registry/canvasmith/blocks/data-table';
 import {DetailDrawer} from '@/registry/canvasmith/blocks/detail-drawer';
 import {PageHeader} from '@/registry/canvasmith/ui/page-header';
-import {UserMenu} from '@/registry/canvasmith/ui/user-menu';
 
 /**
  * A directory worker record shown in the master list and detail drawer.
@@ -137,21 +130,8 @@ const WORKERS: Worker[] = [
   },
 ];
 
-const NAV_ITEMS: AppShellNavItem[] = [
-  {id: 'home', label: 'Home', icon: homeIcon, href: '#home'},
-  {id: 'people', label: 'People', icon: userIcon, href: '#people'},
-  {id: 'tasks', label: 'Tasks', icon: clipboardListIcon, href: '#tasks'},
-];
-
-const brandStyles = createStyles({
-  alignItems: 'center',
-  gap: system.space.x2,
-});
-
-const brandTitleStyles = createStyles({
-  margin: 0,
-  whiteSpace: 'nowrap',
-  color: cssVar(system.color.fg.stronger),
+const pageStyles = createStyles({
+  padding: system.space.x8,
 });
 
 const layout = createStyles({
@@ -255,28 +235,7 @@ export default function ListDetailPage() {
   );
 
   return (
-    <AppShell
-      brand={
-        <Flex cs={brandStyles}>
-          <SystemIcon icon={rocketIcon} size="md" color={system.color.icon.primary.default} />
-          <Heading as="h1" size="small" cs={brandTitleStyles}>
-            People Hub
-          </Heading>
-        </Flex>
-      }
-      nav={NAV_ITEMS}
-      activeNavId="people"
-      headerActions={
-        <UserMenu
-          name="Helena Voss"
-          email="helena.voss@example.com"
-          items={[
-            {id: 'profile', label: 'View profile', icon: userIcon},
-            {id: 'sign-out', label: 'Sign out', isDestructive: true},
-          ]}
-        />
-      }
-    >
+    <Box cs={pageStyles}>
       <PageHeader
         title="Worker Directory"
         breadcrumbs={[{label: 'Home', href: '#home'}, {label: 'People'}, {label: 'Worker Directory'}]}
@@ -346,6 +305,6 @@ export default function ListDetailPage() {
           )}
         </DetailDrawer>
       </Flex>
-    </AppShell>
+    </Box>
   );
 }
