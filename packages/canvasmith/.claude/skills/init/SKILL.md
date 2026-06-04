@@ -139,18 +139,93 @@ transpilePackages: [
 ],
 ```
 
-### 7. Smoke-test the wiring
+### 7. Install the AppShell chrome — mandatory wrapper
+
+Every Canvasmith-produced prototype renders inside Workday product chrome. Mount the shell in the consumer's root provider so every page is auto-shelled from setup forward.
+
+**Step 7a — Install the `app-shell` registry block** into the consumer project using the standard `/canvasmith:add app-shell` flow (file copy + dep install). The block lands at the consumer's `aliases.components` path, defaulting to `components/canvasmith/app-shell.tsx`.
+
+**Step 7b — Write `lib/app-nav.ts`** (or the path resolved by `aliases.lib`):
+
+```ts
+import {
+  homeIcon, userIcon, briefcaseIcon, cartIcon,
+  dotsHorizontalIcon, bookmarkIcon, gearIcon,
+} from '@workday/canvas-system-icons-web';
+import type {AppShellNavItem} from '@/components/canvasmith/app-shell';
+
+export const primaryNav: AppShellNavItem[] = [
+  {id: 'home',        label: 'Home',        icon: homeIcon,           href: '/'},
+  {id: 'personal',    label: 'Personal',    icon: userIcon,           href: '/personal'},
+  {id: 'finance',     label: 'Finance',     icon: briefcaseIcon,      href: '/finance'},
+  {id: 'procurement', label: 'Procurement', icon: cartIcon,           href: '/procurement'},
+  {id: 'more',        label: 'More',        icon: dotsHorizontalIcon, href: '/more'},
+];
+
+export const footerNav: AppShellNavItem[] = [
+  {id: 'saved',    label: 'Saved',    icon: bookmarkIcon, href: '/saved'},
+  {id: 'settings', label: 'Settings', icon: gearIcon,     href: '/settings'},
+];
+```
+
+If any of the icon names above are not present in the installed `@workday/canvas-system-icons-web` version, substitute with the nearest available icon and note the substitution in `CANVAS.md`.
+
+**Step 7c — Mount AppShell in the provider wrapper.**
+
+- **Next App Router** — modify the `Providers` client wrapper created in step 5 so it renders the shell inside `<CanvasProvider>`. Replace the body of `app/providers.tsx` with:
+
+  ```tsx
+  'use client';
+  import * as React from 'react';
+  import {usePathname} from 'next/navigation';
+  import {CanvasProvider} from '@workday/canvas-kit-react/common';
+  import {AppShell} from '@/components/canvasmith/app-shell';
+  import {primaryNav, footerNav} from '@/lib/app-nav';
+  import './canvas-fonts';
+
+  export function Providers({children}: {children: React.ReactNode}) {
+    const pathname = usePathname();
+    const activeNavId =
+      [...primaryNav, ...footerNav].find(item => item.href === pathname)?.id;
+    return (
+      <CanvasProvider>
+        <AppShell nav={primaryNav} footerNav={footerNav} activeNavId={activeNavId}>
+          {children}
+        </AppShell>
+      </CanvasProvider>
+    );
+  }
+  ```
+
+- **Next Pages Router** — wrap `<Component {...pageProps} />` inside `<AppShell>` in `pages/_app.tsx`. Resolve the active id from `useRouter().pathname`.
+
+- **Vite / CRA** — wrap the application root inside `<AppShell>` in `src/main.tsx` / `src/index.tsx`. If `react-router-dom` is a dependency, resolve the active id from `useLocation().pathname`; otherwise omit `activeNavId` and note in `CANVAS.md` that the consumer should pass it manually per route.
+
+### 8. Smoke-test the wiring (inside the shell)
 Add a single Canvas component to the entry page to confirm tokens + fonts + provider resolve. For App Router the page must be a client component:
 ```tsx
 'use client';
+import * as React from 'react';
+import {Box} from '@workday/canvas-kit-react/layout';
+import {Heading} from '@workday/canvas-kit-react/text';
 import {PrimaryButton} from '@workday/canvas-kit-react/button';
+import {createStyles} from '@workday/canvas-kit-styling';
+import {system} from '@workday/canvas-tokens-web';
+
+const pageStyles = createStyles({padding: system.space.x8});
+
 export default function Page() {
-  return <PrimaryButton>Hello Canvas</PrimaryButton>;
+  return (
+    <Box cs={pageStyles}>
+      <Heading as="h1" size="medium">Hello Canvas</Heading>
+      <PrimaryButton>Primary action</PrimaryButton>
+    </Box>
+  );
 }
 ```
-A blue Roboto pill button confirms success. If it renders unstyled: the token CSS imports are missing or in the wrong place. If SSR shows a flash: the registry isn't reusing `getCache()`.
+A page rendered inside the Workday chrome (top header + 80px icon rail with the default nav) showing a Heading and a PrimaryButton confirms success. If it renders unstyled: the token CSS imports are missing or in the wrong place. If SSR shows a flash: the registry isn't reusing `getCache()`.
 
-### 8. Write `CANVAS.md` at the project root
+### 9. Write `CANVAS.md` at the project root
 Capture the project's Canvas conventions so future `/canvasmith:build` runs and the `canvas-ui` skill stay consistent. Use the template below; fill in real values from what you set up and what you observe in the codebase (brand tokens already in use, components present, spacing rhythm). Do not leave placeholders.
 
 ## Quick gates after init (P0)
