@@ -14,6 +14,8 @@ args:
 
 # /canvasmith:component — scaffold a Canvas-idiomatic component
 
+> **Scope:** This skill produces leaf components, not screens. Never include `<AppShell>` in output — the root layout already provides the chrome, and a nested shell breaks the page.
+
 Author a brand-new component that is indistinguishable from one written by the Canvas Kit team:
 a module-scope **`createStencil`** for styling, a **`createComponent`** factory for the element,
 real **`cssVar(system.*)`** tokens for every value, **`handleCsProp`** to merge the user's `cs`/
