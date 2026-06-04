@@ -184,7 +184,7 @@
       "name": "app-shell",
       "type": "registry:component",
       "title": "App Shell",
-      "description": "An application layout scaffold: top header, a collapsible Canvas SidePanel for navigation, and a main content region.",
+      "description": "Workday product chrome: top header (brand + actions + avatar), a fixed 80px icon rail with stacked icon+label nav and pinned footer items, and a scrollable main content region.",
       "author": "Canvasmith <https://canvasmith.dev>",
       "dependencies": [
         "@workday/canvas-kit-react@^15.0.6",
