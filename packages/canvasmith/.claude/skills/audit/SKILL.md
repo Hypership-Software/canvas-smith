@@ -59,6 +59,15 @@ Read the target, find everything that breaks Workday-native look, feel, or acces
 - Non-Canvas component library — imports from `@mui/material`, `@chakra-ui/react`, `react-bootstrap`, `antd`, `@radix-ui/*`, `@/components/ui/*` (shadcn), or raw styled HTML standing in for Canvas components. **P0** — the UI is not Workday-native; recommend `/canvasmith:convert`.
 - Deprecated Canvas API — `@workday/canvas-kit-react/tokens` (`colors`/`space`/`borderRadius`), deprecated `Switch`/`StatusIndicator`/class `RadioGroup`/`AccentIcon`, Box style-prop spacing. **P3** — move to `@workday/canvas-kit-preview-react/*` and `@workday/canvas-tokens-web` `system.*`.
 
+**App shell**
+- Un-shelled top-level page — any file matching `app/**/page.tsx`, `pages/**/*.tsx` (excluding `_app.tsx` and `_document.tsx`), or `src/routes/**/*.tsx` whose default-exported JSX root is not `<AppShell>` **and** whose root layout / `_app` / entry file does not mount `<AppShell>` either. **P0** — the page renders outside Workday chrome. Fix: ensure the root layout wraps `{children}` in `<AppShell>` (preferred — usually means re-running `/canvasmith:init`), or wrap the offending page itself in `<AppShell>`.
+- Nested AppShell — a page that renders `<AppShell>` when an ancestor (`app/providers.tsx`, `pages/_app.tsx`, `src/main.tsx`, or `src/index.tsx`) already does. **P0** — produces double chrome. Fix: remove the inner shell so only the layout-level shell remains.
+
+**Detection heuristic for AppShell rules:**
+1. Grep the project for `from '@/components/canvasmith/app-shell'` (and alias-equivalent paths the consumer may use).
+2. If a hit appears in `app/providers.tsx`, `pages/_app.tsx`, `src/main.tsx`, or `src/index.tsx`, the layout shells globally. Flag any **page** file that also imports `AppShell` (nested-shell P0).
+3. If no hit appears in any of those entry files, every page is expected to import and render `<AppShell>` itself. Flag any page that does not (un-shelled P0).
+
 ## Output format (use exactly)
 
 A single Markdown table, sorted P0 -> P3 then by file:
