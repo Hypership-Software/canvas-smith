@@ -235,6 +235,9 @@ Capture the project's Canvas conventions so future `/canvasmith:build` runs and 
 - [ ] (Next App Router) Registry uses `getCache()`, sets `cache.compat = true`, flushes via `useServerInsertedHTML`.
 - [ ] (Next App Router) Files using Canvas components start with `'use client'`.
 - [ ] `CANVAS.md` exists at the project root.
+- [ ] AppShell mounted in the provider wrapper, sourced from `components/canvasmith/app-shell`.
+- [ ] `lib/app-nav.ts` exists and exports `primaryNav` + `footerNav`.
+- [ ] Smoke-test entry page renders content inside the shell main region (visible top header + 80px rail).
 
 ---
 
@@ -271,6 +274,12 @@ Capture the project's Canvas conventions so future `/canvasmith:build` runs and 
 - Brand accent / primary: system.color.brand.accent.primary (default Workday Blueberry blue-600)
 - Focus ring: brand.common.focusOutline / system.color.border.primary.default (blue-500) — do not override casually
 - Any project overrides: <list `[stencil.vars.x]: token` overrides, or "none — Workday defaults">
+
+## App shell (mandatory chrome)
+- Every top-level view renders inside <AppShell> from `components/canvasmith/app-shell`.
+- Edit the rail in `lib/app-nav.ts` (export `primaryNav` and `footerNav`).
+- Do not bypass the shell for prototypes. To opt out for a specific route (e.g. an auth screen), render an alternate layout segment in Next App Router rather than hand-removing the shell.
+- Active state matches by exact `href` against the current pathname. For nested routes that should highlight the parent item, pass `activeNavId` manually to <AppShell>.
 
 ## Components in use
 - <e.g. PrimaryButton, FormField + TextInput, Table, SidePanel, Tabs, Card, Modal — fill in as the app grows>
